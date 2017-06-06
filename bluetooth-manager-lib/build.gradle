@@ -1,0 +1,40 @@
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion 25
+    buildToolsVersion "25.0.3"
+    resourcePrefix 'ble_'
+    defaultConfig {
+        minSdkVersion 18
+        targetSdkVersion 25
+        versionCode 1
+        versionName "1.0"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    lintOptions {
+        abortOnError false
+    }
+}
+
+dependencies {
+    //compile 'com.blakequ.androidblemanager:bluetooth-manager-lib:2.1.4'
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    testCompile 'junit:junit:4.12'
+    compile "com.android.support:appcompat-v7:25.3.1"
+    compile 'com.blakequ.logger:logger:1.0.1'
+}
+
+//执行bintrayUpload之前必须执行gradlew install生成poms文件（build/poms）
+if (isForUpload2Maven()) {
+    println ':library:include upload 2 maven methods'
+    apply from: 'https://raw.githubusercontent.com/haodynasty/JCenter/master/installv1.gradle'
+    apply from: 'https://raw.githubusercontent.com/haodynasty/JCenter/master/bintrayv1.gradle'
+    apply from: 'https://raw.githubusercontent.com/haodynasty/JCenter/master/license.gradle'
+}

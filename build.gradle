@@ -1,0 +1,107 @@
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+def getLocalProperty(String key) {
+    if (!localPropertiesFile().exists()) {
+        return null
+    }
+
+    Properties properties = new Properties()
+    properties.load(localPropertiesFile().newDataInputStream())
+    return properties.getProperty(key)
+}
+
+def hasLocalProperty(String key) {
+    if (getLocalProperty(key) != null) {
+        return true
+    }
+    return false
+}
+
+def localPropertiesFile() {
+    return project.rootProject.file('local.properties');
+}
+
+def isForUpload2Maven() {
+    return getLocalProperty("for.upload") == "true"
+}
+
+//获取当前时间
+def releaseTime() {
+    return new Date().format("yyyyMMdd", TimeZone.getTimeZone("UTC"))
+}
+
+//获取自动化版本号
+def gitVersionCode() {
+    def cmd = 'git rev-list HEAD --first-parent --count'
+    cmd.execute().text.trim().toInteger()
+}
+
+//获取自动化版本名字（git发布之前打上tag）
+def gitVersionTag() {
+    def cmd = 'git describe --tags'
+    def version = cmd.execute().text.trim()
+
+    def pattern = "-(\\d+)-g"
+    def matcher = version =~ pattern
+
+    if (matcher) {
+        version = version.substring(0, matcher.start()) + "." + matcher[0][1]
+    } else {
+        version = version + ".0"
+    }
+
+    return version
+}
+
+//获取最新的提交日志
+def gitLogFirstCommit() {
+    def cmd = 'git log -1 --pretty=update:"%s"' //%cd是日期，%an是作者
+    cmd.execute().text.trim()
+}
+
+buildscript {
+    repositories {
+        jcenter()
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
+
+        //添加fir maven源
+        maven {
+            url "http://maven.bughd.com/public"
+        }
+    }
+    dependencies {
+       // compile 'com.blakequ.androidblemanager:bluetooth-manager-lib:2.1.4'
+        classpath 'com.android.tools.build:gradle:2.3.2'
+        classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
+        // NOTE: Do not place your application dependencies here; they belong
+        // in the individual module build.gradle files
+
+        //添加fir插件依赖
+        classpath 'im.fir:gradle-fir-publisher:1.0.7'
+
+        //using for upload to bintray lib
+        File file = project.rootProject.file('local.properties')
+        if (file.exists()) {
+            Properties properties = new Properties()
+            properties.load(file.newDataInputStream())
+            boolean upload2maven = properties.getProperty("for.upload") == "true"
+            if (upload2maven) {
+                println ':global:include upload 2 maven classpath'
+                classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.4'
+                classpath 'com.github.dcendents:android-maven-gradle-plugin:1.4.1'
+                classpath "gradle.plugin.nl.javadude.gradle.plugins:license-gradle-plugin:0.13.1"
+            }
+        }
+    }
+}
+
+allprojects {
+    repositories {
+        jcenter()
+    }
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}

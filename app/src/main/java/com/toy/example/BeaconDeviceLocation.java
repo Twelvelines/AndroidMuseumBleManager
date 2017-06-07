@@ -8,26 +8,21 @@ import com.blakequ.bluetooth_manager_lib.device.ibeacon.IBeaconDevice;
 
 public class BeaconDeviceLocation {
     private double latitude, longitude;
-    private String uuid, major, minor;
+    private int major, minor;
+    private String uuid, macAddr;
 
-    public BeaconDeviceLocation(String uuid, String major, String minor, double longitude, double latitude) {
-        this.uuid = uuid;
-        this.major = major;
-        this.minor = minor;
+    public BeaconDeviceLocation(String macAddr, double longitude, double latitude) {
+        this.macAddr = macAddr;
         this.latitude = latitude;
         this.longitude = longitude;
     }
 
-    public String getUuid() {
-        return uuid;
-    }
+    public BeaconDeviceLocation(String uuid, int major, int minor, String macAddr, double longitude, double latitude) {
+        this(macAddr, longitude, latitude);
+        this.uuid = uuid;
+        this.major = major;
+        this.minor = minor;
 
-    public String getMajor() {
-        return major;
-    }
-
-    public String getMinor() {
-        return minor;
     }
 
     public double getLatitude() {
@@ -36,5 +31,21 @@ public class BeaconDeviceLocation {
 
     public double getLongitude() {
         return longitude;
+    }
+
+    public int getMajor() {
+        return major;
+    }
+
+    public int getMinor() {
+        return minor;
+    }
+
+    public String getMacAddr() {
+        return macAddr;
+    }
+
+    public String getUuid() {
+        return uuid;
     }
 }

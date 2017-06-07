@@ -19,11 +19,18 @@ import com.blakequ.androidblemanager.ui.MainActivity;
 import com.blakequ.androidblemanager.utils.BluetoothUtils;
 import com.blakequ.androidblemanager.utils.Constants;
 import com.blakequ.androidblemanager.utils.PreferencesUtils;
+import com.blakequ.bluetooth_manager_lib.device.BeaconType;
+import com.blakequ.bluetooth_manager_lib.device.BeaconUtils;
 import com.blakequ.bluetooth_manager_lib.device.BluetoothLeDevice;
+import com.blakequ.bluetooth_manager_lib.device.ibeacon.IBeaconDevice;
+import com.toy.example.MainDeviceLocation;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -119,6 +126,14 @@ public class ScanFragment extends Fragment implements AdapterView.OnItemClickLis
                     if (store != null){
                         mLeDeviceListAdapter.refreshData(store.getDeviceList());
                         updateItemCount(mLeDeviceListAdapter.getCount());
+                        // updating user location after refreshing
+                        List<IBeaconDevice> beaconList = filterDevices(store);
+                        if (beaconList.size() > 2) {
+                            MainDeviceLocation.locate(beaconList.get(0), beaconList.get(1), beaconList.get(2));
+                            mTvBluetoothFilter.setText("Location:\n" +
+                                    "Longitude: " + MainDeviceLocation.getLongitude() + "\n" +
+                                    "Latitude: " + MainDeviceLocation.getLatitude() + "\n");
+                        }
                     }
                 }
                 break;
@@ -151,5 +166,17 @@ public class ScanFragment extends Fragment implements AdapterView.OnItemClickLis
 
     private void updateItemCount(final int count) {
         mTvItemCount.setText(getString(R.string.formatter_item_count, String.valueOf(count)));
+    }
+
+    public List<IBeaconDevice> filterDevices(BluetoothLeDeviceStore bds) {
+        final List<BluetoothLeDevice> bleDevices = bds.getDeviceList();
+        List<IBeaconDevice> iBeacons = new ArrayList<>();
+        for(final BluetoothLeDevice device : bleDevices){
+            boolean isIBeacon = BeaconUtils.getBeaconType(device) == BeaconType.IBEACON;
+            if(isIBeacon){
+                iBeacons.add(device.getIBeaconDevice());
+            }
+        }
+        return iBeacons;
     }
 }

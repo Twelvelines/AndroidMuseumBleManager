@@ -10,8 +10,8 @@ public class MainDeviceLocation {
     private static double longitude;
     private static double latitude;
 
-    public void locate(IBeaconDevice iBeaconOne, IBeaconDevice iBeaconTwo, IBeaconDevice iBeaconThree) {
-
+    public static void locate(IBeaconDevice iBeaconOne, IBeaconDevice iBeaconTwo, IBeaconDevice iBeaconThree) {
+        try {
             double d_1 = iBeaconOne.getAccuracy();
             double d_2 = iBeaconTwo.getAccuracy();
             double d_3 = iBeaconThree.getAccuracy();
@@ -31,13 +31,8 @@ public class MainDeviceLocation {
 
             latitude = x;
             longitude = y;
-            x_1=x_1-x;
-            x_2=x_2-x;
-            x_3=x_3-x;
-            y_1=y_1-y;
-            y_2=y_2-y;
-            y_3=y_3-y;
-
+        } catch (BeaconUnrecognisedException be) {
+        }
 
     }
 

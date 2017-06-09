@@ -31,6 +31,7 @@ import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -131,8 +132,8 @@ public class ScanFragment extends Fragment implements AdapterView.OnItemClickLis
                         if (beaconList.size() > 2) {
                             MainDeviceLocation.locate(beaconList.get(0), beaconList.get(1), beaconList.get(2));
                             mTvBluetoothFilter.setText("Location:\n" +
-                                    "Longitude: " + MainDeviceLocation.getLongitude() + "\n" +
-                                    "Latitude: " + MainDeviceLocation.getLatitude() + "\n");
+                                    "Longitude: " + String.format(Locale.US, "%2f", MainDeviceLocation.getLongitude()) + "\n" +
+                                    "Latitude: " + String.format(Locale.US, "%2f", MainDeviceLocation.getLatitude()) + "\n");
                         }
                     }
                 }

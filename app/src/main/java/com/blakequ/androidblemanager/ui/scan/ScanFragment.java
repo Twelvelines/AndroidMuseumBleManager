@@ -51,7 +51,7 @@ import butterknife.ButterKnife;
  * version : 1.0 <br>
  * description:
  */
-public class ScanFragment extends Fragment implements AdapterView.OnItemClickListener{
+public class ScanFragment extends Fragment implements AdapterView.OnItemClickListener {
 
     @Bind(R.id.tvBluetoothLe)
     protected TextView mTvBluetoothLeStatus;
@@ -105,25 +105,25 @@ public class ScanFragment extends Fragment implements AdapterView.OnItemClickLis
         String filterName = PreferencesUtils.getString(getContext(), Constants.FILTER_NAME, "");
         int filterRssi = PreferencesUtils.getInt(getContext(), Constants.FILTER_RSSI, -100);
         boolean filterSwitch = PreferencesUtils.getBoolean(getContext(), Constants.FILTER_SWITCH, false);
-        if (filterSwitch){
-            if (filterName != null && filterName.length() > 0){
-                mTvBluetoothFilter.setText("FilterName:"+filterName+" ,FilterRssi:"+filterRssi);
-            }else {
-                mTvBluetoothFilter.setText("FilterRssi:"+filterRssi);
+        if (filterSwitch) {
+            if (filterName != null && filterName.length() > 0) {
+                mTvBluetoothFilter.setText("FilterName:" + filterName + " ,FilterRssi:" + filterRssi);
+            } else {
+                mTvBluetoothFilter.setText("FilterRssi:" + filterRssi);
             }
-        }else {
+        } else {
             mTvBluetoothFilter.setText(R.string.off);
         }
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEventRefresh(UpdateEvent event){
-        switch (event.getType()){
+    public void onEventRefresh(UpdateEvent event) {
+        switch (event.getType()) {
             case SCAN_UPDATE:
                 MainActivity activity = (MainActivity) getActivity();
-                if (activity != null){
+                if (activity != null) {
                     BluetoothLeDeviceStore store = activity.getDeviceStore();
-                    if (store != null){
+                    if (store != null) {
                         mLeDeviceListAdapter.refreshData(store.getDeviceList());
                         updateItemCount(mLeDeviceListAdapter.getCount());
                         // updating user location after refreshing
@@ -171,9 +171,9 @@ public class ScanFragment extends Fragment implements AdapterView.OnItemClickLis
     public List<IBeaconDevice> filterDevices(BluetoothLeDeviceStore bds) {
         final List<BluetoothLeDevice> bleDevices = bds.getDeviceList();
         List<IBeaconDevice> iBeacons = new ArrayList<>();
-        for(final BluetoothLeDevice device : bleDevices){
+        for (final BluetoothLeDevice device : bleDevices) {
             boolean isIBeacon = BeaconUtils.getBeaconType(device) == BeaconType.IBEACON;
-            if(isIBeacon){
+            if (isIBeacon) {
                 iBeacons.add(device.getIBeaconDevice());
             }
         }

@@ -288,27 +288,9 @@ if SDK >= 23, 增加权限
 * `android.permission.ACCESS_COARSE_LOCATION`
 * `android.permission.ACCESS_FINE_LOCATION`
 
-# 更新日志
-- v1.0(2016/8/25): 完成基本框架（扫描，设备连接）
-- v1.0(2016/8/29): 修复多设备连接bug
-- v1.0(2016/8/30): 增加demo权限检查
-- v2.0(2016/11/3): 完善demo，增加多设备单个设备的单独连接入口
-- v2.1(2016/12/1): 增加扫描和连接的个性化配置
-- v2.1.1(2016/12/7): 修复多个设备连接时，无法移除某个设备
-- v2.1.2(2016/12/23): 新增重连策略，每次断开之后重连按照固定时间，如每次断开之后10s就启动重连；新增超时连接设置，当连接过程中超时会自动检测蓝牙状态，并可设置超时时间；修复多连接时调用startConnect()无法立即启动重连的问题
 
-
-# 7. 链接参考
+# 链接参考
 其中ibeacon封装和扫描部分代码参考如下开源库，在此感谢作者的无私奉献。
 - [Bluetooth-LE-Library](https://github.com/alt236/Bluetooth-LE-Library---Android)
 - [BluetoothCompat](https://github.com/joerogers/BluetoothCompat)
 
-# 9. Apk
-- [demo address](http://fir.im/pxfn)
-- <p><img src="screenshot/ecode.png"/></p>
-
-
-[bintray_svg]: https://api.bintray.com/packages/haodynasty/maven/AndroidBleManager/images/download.svg
-[bintray_url]: https://bintray.com/haodynasty/maven/AndroidBleManager/_latestVersion
-[licence_svg]: https://img.shields.io/badge/license-Apache%202-green.svg
-[licence_url]: https://www.apache.org/licenses/LICENSE-2.0

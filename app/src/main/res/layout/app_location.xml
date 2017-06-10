@@ -24,11 +24,11 @@
         android:layout_gravity="center"
         app:srcCompat="@mipmap/location" />
 
-    <TextView
-        android:id="@+id/LocationView"
-        android:layout_width="wrap_content"
-        android:layout_height="37dp"
-        android:text="Not scanned yet"
-        android:textSize="18sp" />
+
+    <com.blakequ.androidblemanager.ui.scan.LocationView
+        android:id="@+id/location_board"
+        android:layout_width="match_parent"
+        android:layout_gravity="center"
+        android:layout_height="500dp" />
 
 </android.support.design.widget.CoordinatorLayout>

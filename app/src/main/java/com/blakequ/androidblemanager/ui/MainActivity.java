@@ -32,7 +32,7 @@ import com.blakequ.androidblemanager.event.UpdateEvent;
 import com.blakequ.androidblemanager.service.AppUpgradeService;
 import com.blakequ.androidblemanager.ui.connect.ConnectManyFragment;
 import com.blakequ.androidblemanager.ui.connect.ConnectOneFragment;
-import com.blakequ.androidblemanager.ui.scan.LocationFragment;
+
 import com.blakequ.androidblemanager.ui.scan.ScanFragment;
 import com.blakequ.androidblemanager.utils.BluetoothUtils;
 import com.blakequ.androidblemanager.utils.Constants;
@@ -140,7 +140,7 @@ public class MainActivity extends ToolbarActivity
         fragments.add(new ScanFragment());     // 0---------------
         fragments.add(new ConnectOneFragment());     // 1---------------
         fragments.add(new ConnectManyFragment());   // 2---------------
-        fragments.add(new LocationFragment());  // 3---------------
+        fragments.add(new ScanFragment());  // 3---------------
         mAdapter = new FragmentPageAdapter(getSupportFragmentManager(), fragments);
 //        mViewPager.setOffscreenPageLimit(fragments.size());
         mViewPager.setAdapter(mAdapter);

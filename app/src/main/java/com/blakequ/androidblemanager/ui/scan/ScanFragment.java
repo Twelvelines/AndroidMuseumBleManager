@@ -1,15 +1,11 @@
 package com.blakequ.androidblemanager.ui.scan;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ListView;
-import android.widget.TextView;
 
 import com.blakequ.androidblemanager.R;
 import com.blakequ.androidblemanager.adapter.DeviceListAdapter;
@@ -17,13 +13,14 @@ import com.blakequ.androidblemanager.containers.BluetoothLeDeviceStore;
 import com.blakequ.androidblemanager.event.UpdateEvent;
 import com.blakequ.androidblemanager.ui.MainActivity;
 import com.blakequ.androidblemanager.utils.BluetoothUtils;
-import com.blakequ.androidblemanager.utils.Constants;
-import com.blakequ.androidblemanager.utils.PreferencesUtils;
 import com.blakequ.bluetooth_manager_lib.device.BeaconType;
 import com.blakequ.bluetooth_manager_lib.device.BeaconUtils;
 import com.blakequ.bluetooth_manager_lib.device.BluetoothLeDevice;
 import com.blakequ.bluetooth_manager_lib.device.ibeacon.IBeaconDevice;
-import com.toy.example.MainDeviceLocation;
+import com.toy.example.BeaconDeviceLocation;
+import com.toy.example.BeaconDeviceLocationData;
+import com.toy.example.BeaconUnrecognisedException;
+import com.toy.example.UserLocation;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -31,7 +28,6 @@ import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -52,24 +48,14 @@ import butterknife.ButterKnife;
  * version : 1.0 <br>
  * description:
  */
-public class ScanFragment extends Fragment implements AdapterView.OnItemClickListener {
-
-    @Bind(R.id.tvBluetoothLe)
-    protected TextView mTvBluetoothLeStatus;
-    @Bind(R.id.tvBluetoothStatus)
-    protected TextView mTvBluetoothStatus;
-    @Bind(R.id.tvBluetoothFilter)
-    protected TextView mTvBluetoothFilter;
-    @Bind(R.id.tvItemCount)
-    protected TextView mTvItemCount;
-    @Bind(android.R.id.list)
-    protected ListView mList;
-    @Bind(android.R.id.empty)
-    protected View mEmpty;
+public class ScanFragment extends Fragment {
+    @Bind(R.id.location_board)
+    protected LocationView locationView;
     private View rootView;
-
     private DeviceListAdapter mLeDeviceListAdapter;
     private BluetoothUtils mBluetoothUtils;
+    boolean mIsBluetoothOn;
+    boolean mIsBluetoothLePresent;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -88,33 +74,8 @@ public class ScanFragment extends Fragment implements AdapterView.OnItemClickLis
     @Override
     public void onResume() {
         super.onResume();
-        final boolean mIsBluetoothOn = mBluetoothUtils.isBluetoothOn();
-        final boolean mIsBluetoothLePresent = mBluetoothUtils.isBluetoothLeSupported();
-
-        if (mIsBluetoothOn) {
-            mTvBluetoothStatus.setText(R.string.on);
-        } else {
-            mTvBluetoothStatus.setText(R.string.off);
-        }
-
-        if (mIsBluetoothLePresent) {
-            mTvBluetoothLeStatus.setText(R.string.supported);
-        } else {
-            mTvBluetoothLeStatus.setText(R.string.not_supported);
-        }
-
-        String filterName = PreferencesUtils.getString(getContext(), Constants.FILTER_NAME, "");
-        int filterRssi = PreferencesUtils.getInt(getContext(), Constants.FILTER_RSSI, -100);
-        boolean filterSwitch = PreferencesUtils.getBoolean(getContext(), Constants.FILTER_SWITCH, false);
-        if (filterSwitch) {
-            if (filterName != null && filterName.length() > 0) {
-                mTvBluetoothFilter.setText("FilterName:" + filterName + " ,FilterRssi:" + filterRssi);
-            } else {
-                mTvBluetoothFilter.setText("FilterRssi:" + filterRssi);
-            }
-        } else {
-            mTvBluetoothFilter.setText(R.string.off);
-        }
+        mIsBluetoothOn = mBluetoothUtils.isBluetoothOn();
+        mIsBluetoothLePresent = mBluetoothUtils.isBluetoothLeSupported();
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -126,15 +87,7 @@ public class ScanFragment extends Fragment implements AdapterView.OnItemClickLis
                     BluetoothLeDeviceStore store = activity.getDeviceStore();
                     if (store != null) {
                         mLeDeviceListAdapter.refreshData(store.getDeviceList());
-                        updateItemCount(mLeDeviceListAdapter.getCount());
-                        // updating user location after refreshing
-                        List<IBeaconDevice> beaconList = filterDevices(store);
-                        if (beaconList.size() > 2) {
-                            MainDeviceLocation.locate(beaconList.get(0), beaconList.get(1), beaconList.get(2));
-                            mTvBluetoothFilter.setText("Location:\n" +
-                                    "Longitude: " + String.format(Locale.US, "%2f", MainDeviceLocation.getLongitude()) + "\n" +
-                                    "Latitude: " + String.format(Locale.US, "%2f", MainDeviceLocation.getLatitude()) + "\n");
-                        }
+                        updateMapping(store.getDeviceList());
                     }
                 }
                 break;
@@ -144,37 +97,33 @@ public class ScanFragment extends Fragment implements AdapterView.OnItemClickLis
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        rootView = inflater.inflate(R.layout.frament_scan, null);
+        rootView = inflater.inflate(R.layout.app_location, null);
         ButterKnife.bind(this, rootView);
-        mList.setEmptyView(mEmpty);
-        mList.setOnItemClickListener(this);
-        mList.setAdapter(mLeDeviceListAdapter);
-        updateItemCount(0);
         return rootView;
     }
 
-
-    @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        final BluetoothLeDevice device = (BluetoothLeDevice) mLeDeviceListAdapter.getItem(position);
-        if (device == null) return;
-
-        final Intent intent = new Intent(getActivity(), DeviceDetailsActivity.class);
-        intent.putExtra(DeviceDetailsActivity.EXTRA_DEVICE, device);
-
-        startActivity(intent);
+    private void updateMapping(List<BluetoothLeDevice> deviceList) {
+        List<IBeaconDevice> beaconList = filterDevices(deviceList);
+        List<BeaconDeviceLocation> locations = new ArrayList<>();
+        for (IBeaconDevice aBeacon : beaconList) {
+            try {
+                locations.add(BeaconDeviceLocationData.getLocation(aBeacon));
+            } catch (BeaconUnrecognisedException bue) {
+            }
+        }
+        if (locations.size() > 2) {
+            // updating location mapping
+            UserLocation.locate(beaconList);
+            locationView.setDeviceLocations(locations);
+            locationView.invalidate();
+        }
     }
 
-    private void updateItemCount(final int count) {
-        mTvItemCount.setText(getString(R.string.formatter_item_count, String.valueOf(count)));
-    }
-
-    public List<IBeaconDevice> filterDevices(BluetoothLeDeviceStore bds) {
-        final List<BluetoothLeDevice> bleDevices = bds.getDeviceList();
+    private List<IBeaconDevice> filterDevices(List<BluetoothLeDevice> bleDevices) {
         List<IBeaconDevice> iBeacons = new ArrayList<>();
         for (final BluetoothLeDevice device : bleDevices) {
-            boolean isIBeacon = BeaconUtils.getBeaconType(device) == BeaconType.IBEACON;
-            if (isIBeacon) {
+            if (BeaconUtils.getBeaconType(device) == BeaconType.IBEACON &&
+                    BeaconDeviceLocationData.isRecognisedBeacon(device.getIBeaconDevice())) {
                 iBeacons.add(device.getIBeaconDevice());
             }
         }

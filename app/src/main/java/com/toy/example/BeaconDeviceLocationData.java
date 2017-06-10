@@ -28,6 +28,18 @@ public class BeaconDeviceLocationData {
                 -1, 0));
     }
 
+    public static boolean isRecognisedBeacon(IBeaconDevice beacon) {
+        for (BeaconDeviceLocation aLocation : locations) {
+            if (aLocation.getUuid().equals(beacon.getUUID()) &&
+                    aLocation.getMajor() == beacon.getMajor() &&
+                    aLocation.getMinor() == beacon.getMinor() &&
+                    aLocation.getMacAddr().equals(beacon.getAddress())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public static BeaconDeviceLocation getLocation(IBeaconDevice beacon) throws BeaconUnrecognisedException {
         for (BeaconDeviceLocation aLocation : locations) {
             if (aLocation.getUuid().equals(beacon.getUUID()) &&

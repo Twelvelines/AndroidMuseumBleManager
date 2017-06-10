@@ -26,14 +26,14 @@ public class BeaconDeviceLocationData {
                 "fda50693-a4e2-4fb1-afcf-c6eb07647825", 10002, 34452,
                 "40:F3:85:90:63:9F",
                 -1, 0));
+        locations.add(new BeaconDeviceLocation("40:F3:85:90:63:94", 0, 0));
+        locations.add(new BeaconDeviceLocation("40:F3:85:90:63:99", -1, 0));
+        locations.add(new BeaconDeviceLocation("40:F3:85:90:63:A0", 0, -1));
     }
 
     public static boolean isRecognisedBeacon(IBeaconDevice beacon) {
         for (BeaconDeviceLocation aLocation : locations) {
-            if (aLocation.getUuid().equals(beacon.getUUID()) &&
-                    aLocation.getMajor() == beacon.getMajor() &&
-                    aLocation.getMinor() == beacon.getMinor() &&
-                    aLocation.getMacAddr().equals(beacon.getAddress())) {
+            if (aLocation.getMacAddr().equals(beacon.getAddress())) {
                 return true;
             }
         }
@@ -42,10 +42,7 @@ public class BeaconDeviceLocationData {
 
     public static BeaconDeviceLocation getLocation(IBeaconDevice beacon) throws BeaconUnrecognisedException {
         for (BeaconDeviceLocation aLocation : locations) {
-            if (aLocation.getUuid().equals(beacon.getUUID()) &&
-                    aLocation.getMajor() == beacon.getMajor() &&
-                    aLocation.getMinor() == beacon.getMinor() &&
-                    aLocation.getMacAddr().equals(beacon.getAddress())) {
+            if (aLocation.getMacAddr().equals(beacon.getAddress())) {
                 return aLocation;
             }
         }

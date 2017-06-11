@@ -18,7 +18,7 @@ import java.util.List;
  */
 
 public class LocationView extends View {
-    private Paint mPaint;
+    private Paint beaconPaint;
     private List<BeaconDeviceLocation> deviceLocations = new ArrayList<>();
 
     public LocationView(Context context) {
@@ -32,19 +32,21 @@ public class LocationView extends View {
     }
 
     private void init() {
-        mPaint = new Paint();
-        mPaint.setColor(Color.BLACK);       // 设置画笔颜色
-        mPaint.setStyle(Paint.Style.FILL);  // 设置画笔模式为填充
-        mPaint.setStrokeWidth(10f);         // 设置画笔宽度为10px
+        beaconPaint = new Paint();
+        beaconPaint.setColor(Color.BLACK);       // 设置画笔颜色
+        beaconPaint.setStyle(Paint.Style.FILL);  // 设置画笔模式为填充
+        beaconPaint.setStrokeWidth(10f);         // 设置画笔宽度为10px
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
         canvas.translate(getWidth() / 2, getHeight() / 2);
         for (BeaconDeviceLocation aDeviceLocation : deviceLocations) {
-            canvas.drawCircle((float) aDeviceLocation.getLatitude() * 150, (float) aDeviceLocation.getLongitude() * 150, 20, mPaint);           //绘制圆形
+            canvas.drawCircle((float) (aDeviceLocation.getLatitude() - UserLocation.getLatitude()) * 150,
+                    (float) (aDeviceLocation.getLongitude() - UserLocation.getLongitude()) * 150,
+                    20, beaconPaint);           //绘制圆形
         }
-        canvas.drawCircle((float) UserLocation.getLatitude() * 150, (float) UserLocation.getLongitude() * 150, 20, mPaint);           //绘制圆形
+        // canvas.drawCircle((float) UserLocation.getLatitude() * 150, (float) UserLocation.getLongitude() * 150, 20, beaconPaint);           // drawing user point
     }
 
     public void setDeviceLocations(List<BeaconDeviceLocation> deviceLocations) {

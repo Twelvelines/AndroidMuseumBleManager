@@ -13,13 +13,13 @@ public class UserLocation {
     private static double longitude;
     private static double latitude;
 
-    public static void locate(List<IBeaconDevice> beacons) {
-        // initialising a known beacon list of three
+    public static void locate(List<IBeaconDevice> selected) {
+        /*// initialising a known beacon list of three
         List<IBeaconDevice> selected = selectBeacons(beacons);
         if (selected.size() < 3) {
             // abandoning the attempt to locate the user
             return;
-        }
+        }*/
         double d_1 = selected.get(0).getAccuracy();
         double d_2 = selected.get(1).getAccuracy();
         double d_3 = selected.get(2).getAccuracy();

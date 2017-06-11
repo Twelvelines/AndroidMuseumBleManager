@@ -11,7 +11,7 @@ public class BeaconDeviceLocation {
     private int major, minor;
     private String uuid, macAddr;
 
-    public BeaconDeviceLocation(String macAddr, double latitude, double longitude) {
+    public BeaconDeviceLocation(String macAddr, double longitude, double latitude) {
         this.macAddr = macAddr;
         this.latitude = latitude;
         this.longitude = longitude;

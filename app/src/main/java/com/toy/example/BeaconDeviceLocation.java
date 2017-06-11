@@ -11,13 +11,13 @@ public class BeaconDeviceLocation {
     private int major, minor;
     private String uuid, macAddr;
 
-    public BeaconDeviceLocation(String macAddr, double longitude, double latitude) {
+    public BeaconDeviceLocation(String macAddr, double latitude, double longitude) {
         this.macAddr = macAddr;
         this.latitude = latitude;
         this.longitude = longitude;
     }
 
-    public BeaconDeviceLocation(String uuid, int major, int minor, String macAddr, double longitude, double latitude) {
+    public BeaconDeviceLocation(String uuid, int major, int minor, String macAddr, double latitude, double longitude) {
         this(macAddr, longitude, latitude);
         this.uuid = uuid;
         this.major = major;

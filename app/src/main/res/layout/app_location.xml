@@ -31,4 +31,13 @@
         android:layout_gravity="center"
         android:layout_height="500dp" />
 
+    <TextView
+        android:id="@+id/locationText"
+        android:layout_width="match_parent"
+        android:layout_height="82dp"
+        android:layout_gravity="bottom|right"
+        android:textSize="18sp"
+        app:layout_anchor="@+id/location_board"
+        app:layout_anchorGravity="bottom|left" />
+
 </android.support.design.widget.CoordinatorLayout>

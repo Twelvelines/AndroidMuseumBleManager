@@ -26,9 +26,9 @@ public class BeaconDeviceLocationData {
                 "fda50693-a4e2-4fb1-afcf-c6eb07647825", 10002, 34452,
                 "40:F3:85:90:63:9F",
                 0, -1));
-        locations.add(new BeaconDeviceLocation("40:F3:85:90:63:94", 0, 0));
-        locations.add(new BeaconDeviceLocation("40:F3:85:90:63:99", -1, 0));
-        locations.add(new BeaconDeviceLocation("40:F3:85:90:63:A0", 0, -1));
+        locations.add(new BeaconDeviceLocation("40:F3:85:90:63:94", 1, 1));
+        locations.add(new BeaconDeviceLocation("40:F3:85:90:63:99", -1, 1));
+        locations.add(new BeaconDeviceLocation("40:F3:85:90:63:A0", 1, -1));
     }
 
     public static boolean isRecognisedBeacon(IBeaconDevice beacon) {

@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.blakequ.androidblemanager.R;
 import com.blakequ.androidblemanager.adapter.DeviceListAdapter;
@@ -51,6 +52,8 @@ import butterknife.ButterKnife;
 public class ScanFragment extends Fragment {
     @Bind(R.id.location_board)
     protected LocationView locationView;
+    @Bind(R.id.locationText)
+    protected TextView locationText;
     private View rootView;
     private DeviceListAdapter mLeDeviceListAdapter;
     private BluetoothUtils mBluetoothUtils;
@@ -116,6 +119,9 @@ public class ScanFragment extends Fragment {
             UserLocation.locate(beaconList);
             locationView.setDeviceLocations(locations);
             locationView.invalidate();
+            locationText.setText("User location:\n" +
+                            "Latitude: " + UserLocation.getLatitude() + "\n" +
+                            "Longitude: " + UserLocation.getLongitude() + "\n");
         }
     }
 

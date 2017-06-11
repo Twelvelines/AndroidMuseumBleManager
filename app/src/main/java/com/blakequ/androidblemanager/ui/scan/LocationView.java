@@ -42,11 +42,17 @@ public class LocationView extends View {
     protected void onDraw(Canvas canvas) {
         canvas.translate(getWidth() / 2, getHeight() / 2);
         for (BeaconDeviceLocation aDeviceLocation : deviceLocations) {
-            canvas.drawCircle((float) (aDeviceLocation.getLatitude() - UserLocation.getLatitude()) * 150,
-                    (float) (aDeviceLocation.getLongitude() - UserLocation.getLongitude()) * 150,
-                    20, beaconPaint);           //绘制圆形
+            canvas.drawCircle(
+                    (float) (aDeviceLocation.getLatitude()/* - UserLocation.getLatitude()*/) * 150,
+                    (float) (aDeviceLocation.getLongitude()/* - UserLocation.getLongitude()*/) * 150,
+                    20, beaconPaint
+            );           //绘制圆形
         }
-        // canvas.drawCircle((float) UserLocation.getLatitude() * 150, (float) UserLocation.getLongitude() * 150, 20, beaconPaint);           // drawing user point
+        canvas.drawCircle(
+                (float) UserLocation.getLatitude() * 150,
+                (float) UserLocation.getLongitude() * 150,
+                20, beaconPaint
+        );           // drawing user point
     }
 
     public void setDeviceLocations(List<BeaconDeviceLocation> deviceLocations) {

@@ -136,7 +136,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="0.5dp"
                             android:background="#8470FF"/>
-                        <com.blakequ.androidblemanager.widget.ListViewForScrollView
+                        <com.androidbeaconedmuseum.widget.ListViewForScrollView
                             android:visibility="gone"
                             android:id="@+id/char_notify_list"
                             android:layout_width="match_parent"
@@ -160,7 +160,7 @@
                 android:layout_height="wrap_content"
                 android:background="#FAF0E6"
                 android:orientation="vertical">
-                <com.blakequ.androidblemanager.widget.ListViewForScrollView
+                <com.androidbeaconedmuseum.widget.ListViewForScrollView
                     android:visibility="gone"
                     android:id="@+id/char_descriptor_list"
                     android:layout_width="match_parent"

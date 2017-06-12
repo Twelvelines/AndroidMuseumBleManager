@@ -19,7 +19,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".ui.MainActivity"
+            android:name="com.blakequ.com.androidblemanager.ui.MainActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -28,12 +28,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.FilterActivity"/>
-        <activity android:name=".ui.scan.DeviceDetailsActivity"/>
-        <activity android:name=".ui.scan.DeviceControlActivity"/>
-        <activity android:name=".ui.scan.CharacteristicDetailActivity"/>
+        <activity android:name="com.blakequ.com.androidblemanager.ui.FilterActivity"/>
+        <activity android:name="com.blakequ.com.androidblemanager.ui.scan.DeviceDetailsActivity"/>
+        <activity android:name="com.blakequ.com.androidblemanager.ui.scan.DeviceControlActivity"/>
+        <activity android:name="com.blakequ.com.androidblemanager.ui.scan.CharacteristicDetailActivity"/>
 
-        <service android:name=".service.AppUpgradeService"/>
+        <service android:name="com.blakequ.com.androidblemanager.service.AppUpgradeService"/>
     </application>
 
 </manifest>

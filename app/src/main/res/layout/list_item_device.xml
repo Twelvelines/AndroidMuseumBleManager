@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
      Copyright (C) 2013 The Android Open Source Project
 
      Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,10 +14,10 @@
      limitations under the License.
 -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:gravity="top"
-              android:orientation="horizontal">
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="top"
+    android:orientation="horizontal">
 
     <ImageView
         android:id="@+id/device_icon"
@@ -26,7 +25,7 @@
         android:layout_height="wrap_content"
         android:paddingRight="5dp"
         android:paddingTop="5dp"
-        android:src="@mipmap/ic_bluetooth"/>
+        android:src="@mipmap/ic_bluetooth" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -37,7 +36,7 @@
             android:id="@+id/device_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="24sp"/>
+            android:textSize="24sp" />
 
         <GridLayout
             android:layout_width="fill_parent"
@@ -50,14 +49,14 @@
                 android:paddingRight="5dp"
                 android:text="@string/label_mac"
                 android:textSize="12sp"
-                android:textStyle="bold"/>
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/device_address"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="12sp"
-                android:typeface="monospace"/>
+                android:typeface="monospace" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -65,14 +64,14 @@
                 android:paddingRight="5dp"
                 android:text="@string/label_updated"
                 android:textSize="12sp"
-                android:textStyle="bold"/>
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/device_last_update"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingRight="5dp"
-                android:textSize="12sp"/>
+                android:textSize="12sp" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -80,14 +79,14 @@
                 android:paddingRight="5dp"
                 android:text="@string/label_rssi"
                 android:textSize="12sp"
-                android:textStyle="bold"/>
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/device_rssi"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingRight="5dp"
-                android:textSize="12sp"/>
+                android:textSize="12sp" />
         </GridLayout>
 
         <GridLayout
@@ -105,7 +104,7 @@
                 android:paddingRight="5dp"
                 android:text="@string/label_uuid"
                 android:textSize="12sp"
-                android:textStyle="bold"/>
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/ibeacon_uuid"
@@ -113,7 +112,7 @@
                 android:layout_height="wrap_content"
                 android:layout_columnSpan="3"
                 android:paddingRight="5dp"
-                android:textSize="12sp"/>
+                android:textSize="12sp" />
 
             <!-- ROW 2 -->
 
@@ -123,14 +122,14 @@
                 android:paddingRight="5dp"
                 android:text="@string/label_major"
                 android:textSize="12sp"
-                android:textStyle="bold"/>
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/ibeacon_major"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingRight="5dp"
-                android:textSize="12sp"/>
+                android:textSize="12sp" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -139,14 +138,14 @@
                 android:paddingRight="5dp"
                 android:text="@string/label_minor"
                 android:textSize="12sp"
-                android:textStyle="bold"/>
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/ibeacon_minor"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingRight="5dp"
-                android:textSize="12sp"/>
+                android:textSize="12sp" />
 
             <!-- ROW 3 -->
 
@@ -156,14 +155,14 @@
                 android:paddingRight="5dp"
                 android:text="@string/label_tx_power"
                 android:textSize="12sp"
-                android:textStyle="bold"/>
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/ibeacon_tx_power"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingRight="5dp"
-                android:textSize="12sp"/>
+                android:textSize="12sp" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -172,14 +171,14 @@
                 android:paddingRight="5dp"
                 android:text="@string/label_distance"
                 android:textSize="12sp"
-                android:textStyle="bold"/>
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/ibeacon_distance"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingRight="5dp"
-                android:textSize="12sp"/>
+                android:textSize="12sp" />
 
             <!-- ROW 4 -->
 
@@ -189,7 +188,7 @@
                 android:paddingRight="5dp"
                 android:text="@string/label_decriptor"
                 android:textSize="12sp"
-                android:textStyle="bold"/>
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/ibeacon_distance_descriptor"
@@ -197,7 +196,7 @@
                 android:layout_height="wrap_content"
                 android:layout_columnSpan="3"
                 android:paddingRight="5dp"
-                android:textSize="12sp"/>
+                android:textSize="12sp" />
         </GridLayout>
     </LinearLayout>
 

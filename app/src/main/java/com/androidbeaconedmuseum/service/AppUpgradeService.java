@@ -17,11 +17,11 @@ import android.view.View;
 import android.widget.RemoteViews;
 import android.widget.Toast;
 
-import com.blakequ.androidblemanager.R;
 import com.androidbeaconedmuseum.utils.DownloadUtils;
 import com.androidbeaconedmuseum.utils.FileUtils;
 import com.androidbeaconedmuseum.utils.MD5Encryptor;
 import com.androidbeaconedmuseum.utils.StringUtils;
+import com.blakequ.androidblemanager.R;
 
 import java.io.File;
 
@@ -33,19 +33,19 @@ import java.io.File;
  * Intent intent = new Intent(getApplicationContext(), AppUpgradeService.class);
  * intent.putExtra(AppUpgradeService.EXTRA_DOWLOAD_URL, url);
  * startService(intent);
- *</pre>
+ * </pre>
  * </ul>
  * 使用后直接可以升级并安装，下载过程中会弹出下载进度栏进度，
  * 下载完成后需要手动停止服务
- * @author blakequ Blakequ@gmail.com
  *
+ * @author blakequ Blakequ@gmail.com
  */
 public class AppUpgradeService extends Service {
 
     private final String TAG = "AppUpgradeService";
-	public static final int APP_VERSION_LATEST = 0;
+    public static final int APP_VERSION_LATEST = 0;
     public static final int APP_VERSION_OLDER = 1;
-    
+
     public static final String EXTRA_DOWLOAD_URL = "downloadUrl";
 
     public static final int mNotificationId = 100;
@@ -59,38 +59,38 @@ public class AppUpgradeService extends Service {
 
     private static final int DOWNLOAD_FAIL = -1;
     private static final int DOWNLOAD_SUCCESS = 0;
-    
-    private Handler mHandler = new Handler(){
+
+    private Handler mHandler = new Handler() {
 
         @Override
         public void handleMessage(Message msg) {
             switch (msg.what) {
-            case DOWNLOAD_SUCCESS:
+                case DOWNLOAD_SUCCESS:
 //                ToastUtils.show(getApplicationContext(), R.string.app_upgrade_download_sucess);
-                install(destFile);
-                break;
-            case DOWNLOAD_FAIL:
-                Toast.makeText(getApplicationContext(), getString(R.string.app_upgrade_download_fail), Toast.LENGTH_LONG).show();
-                mNotificationManager.cancel(mNotificationId);
-                break;
-            default:
-                break;
+                    install(destFile);
+                    break;
+                case DOWNLOAD_FAIL:
+                    Toast.makeText(getApplicationContext(), getString(R.string.app_upgrade_download_fail), Toast.LENGTH_LONG).show();
+                    mNotificationManager.cancel(mNotificationId);
+                    break;
+                default:
+                    break;
             }
             stopSelf();
         }
 
     };
-    
-    
+
+
     private DownloadUtils.DownloadListener downloadListener = new DownloadUtils.DownloadListener() {
         @Override
         public void downloading(int progress) {
-        	//放慢刷新进度
-        	if (progress % 10 == 0) {
-        		mNotification.contentView.setProgressBar(R.id.app_upgrade_progressbar, 100, progress, false);
-        		mNotification.contentView.setTextViewText(R.id.app_upgrade_progresstext, progress + "%");
-        		mNotificationManager.notify(mNotificationId, mNotification);
-			}
+            //放慢刷新进度
+            if (progress % 10 == 0) {
+                mNotification.contentView.setProgressBar(R.id.app_upgrade_progressbar, 100, progress, false);
+                mNotification.contentView.setTextViewText(R.id.app_upgrade_progresstext, progress + "%");
+                mNotificationManager.notify(mNotificationId, mNotification);
+            }
         }
 
         @Override
@@ -108,19 +108,20 @@ public class AppUpgradeService extends Service {
             mNotificationManager.cancel(mNotificationId);
         }
     };
+
     @Override
     public IBinder onBind(Intent intent) {
         return null;
     }
 
     @SuppressLint("NewApi")
-	@Override
+    @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
 
         if (intent != null) {
             mDownloadUrl = intent.getStringExtra(EXTRA_DOWLOAD_URL);
-            if (!StringUtils.isEmpty(mDownloadUrl)){
-                if (FileUtils.isSDCardAvailable()){
+            if (!StringUtils.isEmpty(mDownloadUrl)) {
+                if (FileUtils.isSDCardAvailable()) {
                     destDir = new File(FileUtils.getSDCardPath());
                     if (destDir.exists()) {
                         File destFile = new File(destDir.getPath() + "/" + MD5Encryptor.GetMD5Code(mDownloadUrl));
@@ -128,13 +129,13 @@ public class AppUpgradeService extends Service {
                             destFile.delete();
                         }
                     }
-                }else {
+                } else {
                     Log.e(TAG, "AppUpgradeService sdcard not exist, can not download apk file");
                     stopSelf();
                     return super.onStartCommand(intent, flags, startId);
                 }
 
-                mNotificationManager = (NotificationManager)getSystemService(NOTIFICATION_SERVICE);
+                mNotificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
                 mNotification = new Notification();
 
                 mNotification.contentView = new RemoteViews(getApplication().getPackageName(), R.layout.app_upgrade_notification);
@@ -153,11 +154,11 @@ public class AppUpgradeService extends Service {
                 mNotificationManager.cancel(mNotificationId);
                 mNotificationManager.notify(mNotificationId, mNotification);
                 new AppUpgradeThread().start();
-            }else{
+            } else {
                 Log.e(TAG, "AppUpgradeService download url is null");
                 stopSelf();
             }
-        }else{
+        } else {
             Log.e(TAG, "AppUpgradeService intent is null");
             stopSelf();
         }
@@ -165,7 +166,7 @@ public class AppUpgradeService extends Service {
         return super.onStartCommand(intent, flags, startId);
     }
 
-    class AppUpgradeThread extends Thread{
+    class AppUpgradeThread extends Thread {
 
         @Override
         public void run() {
@@ -188,30 +189,30 @@ public class AppUpgradeService extends Service {
                         e.printStackTrace();
                     }
                 }
-            }else{
-                Log.e(TAG, "Dir is not exist! "+destDir.getPath());
+            } else {
+                Log.e(TAG, "Dir is not exist! " + destDir.getPath());
             }
         }
     }
 
     public boolean checkApkFile(String apkFilePath) {
         boolean result = false;
-        try{
+        try {
             PackageManager pManager = getPackageManager();
             PackageInfo pInfo = pManager.getPackageArchiveInfo(apkFilePath, PackageManager.GET_ACTIVITIES);
             if (pInfo == null) {
-                result =  false;
+                result = false;
             } else {
-                result =  true;
+                result = true;
             }
-        } catch(Exception e) {
-            result =  false;
+        } catch (Exception e) {
+            result = false;
             e.printStackTrace();
         }
         return result;
     }
 
-    public void install(File apkFile){
+    public void install(File apkFile) {
         Uri uri = Uri.fromFile(apkFile);
         Intent intent = new Intent(Intent.ACTION_VIEW);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

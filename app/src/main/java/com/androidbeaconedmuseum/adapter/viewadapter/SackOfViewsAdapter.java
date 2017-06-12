@@ -23,23 +23,23 @@ import java.util.List;
 
 /**
  * Adapter that simply returns row views from a list.
- *
+ * <p>
  * If you supply a size, you must implement newView(), to
  * create a required view. The adapter will then cache these
  * views.
- *
+ * <p>
  * If you supply a list of views in the constructor, that
  * list will be used directly. If any elements in the list
  * are null, then newView() will be called just for those
  * slots.
- *
+ * <p>
  * Subclasses may also wish to override areAllItemsEnabled()
  * (default: false) and isEnabled() (default: false), if some
  * of their rows should be selectable.
- *
+ * <p>
  * It is assumed each view is unique, and therefore will not
  * get recycled.
- *
+ * <p>
  * Note that this adapter is not designed for long lists. It
  * is more for screens that should behave like a list. This
  * is particularly useful if you combine this with other
@@ -47,8 +47,8 @@ import java.util.List;
  * arbitrary number of rows, so it all appears seamless.
  * from:https://github.com/commonsguy/cwac-sacklist
  */
-public class SackOfViewsAdapter extends BaseAdapter{
-    private List<View> views=null;
+public class SackOfViewsAdapter extends BaseAdapter {
+    private List<View> views = null;
 
     /**
      * Constructor creating an empty list of views, but with
@@ -57,9 +57,9 @@ public class SackOfViewsAdapter extends BaseAdapter{
     public SackOfViewsAdapter(int count) {
         super();
 
-        views=new ArrayList<View>(count);
+        views = new ArrayList<View>(count);
 
-        for (int i=0;i<count;i++) {
+        for (int i = 0; i < count; i++) {
             views.add(null);
         }
     }
@@ -72,17 +72,18 @@ public class SackOfViewsAdapter extends BaseAdapter{
     public SackOfViewsAdapter(List<View> views) {
         super();
 
-        this.views=views;
+        this.views = views;
     }
 
     /**
      * Get the data item associated with the specified
      * position in the data set.
+     *
      * @param position Position of the item whose data we want
      */
     @Override
     public Object getItem(int position) {
-        return(views.get(position));
+        return (views.get(position));
     }
 
     /**
@@ -91,7 +92,7 @@ public class SackOfViewsAdapter extends BaseAdapter{
      */
     @Override
     public int getCount() {
-        return(views.size());
+        return (views.size());
     }
 
     /**
@@ -100,17 +101,18 @@ public class SackOfViewsAdapter extends BaseAdapter{
      */
     @Override
     public int getViewTypeCount() {
-        return(getCount());
+        return (getCount());
     }
 
     /**
      * Get the type of View that will be created by getView()
      * for the specified item.
+     *
      * @param position Position of the item whose data we want
      */
     @Override
     public int getItemViewType(int position) {
-        return(position);
+        return (position);
     }
 
     /**
@@ -119,58 +121,62 @@ public class SackOfViewsAdapter extends BaseAdapter{
      */
     @Override
     public boolean areAllItemsEnabled() {
-        return(false);
+        return (false);
     }
 
     /**
      * Returns true if the item at the specified position is
      * not a separator.
+     *
      * @param position Position of the item whose data we want
      */
     @Override
     public boolean isEnabled(int position) {
-        return(false);
+        return (false);
     }
 
     /**
      * Get a View that displays the data at the specified
      * position in the data set.
-     * @param position Position of the item whose data we want
+     *
+     * @param position    Position of the item whose data we want
      * @param convertView View to recycle, if not null
-     * @param parent ViewGroup containing the returned View
+     * @param parent      ViewGroup containing the returned View
      */
     @Override
     public View getView(int position, View convertView,
                         ViewGroup parent) {
-        View result=views.get(position);
+        View result = views.get(position);
 
-        if (result==null) {
-            result=newView(position, parent);
+        if (result == null) {
+            result = newView(position, parent);
             views.set(position, result);
         }
 
-        return(result);
+        return (result);
     }
 
     /**
      * Get the row id associated with the specified position
      * in the list.
+     *
      * @param position Position of the item whose data we want
      */
     @Override
     public long getItemId(int position) {
-        return(position);
+        return (position);
     }
 
     public boolean hasView(View v) {
-        return(views.contains(v));
+        return (views.contains(v));
     }
 
     /**
      * Create a new View to go into the list at the specified
      * position.
+     *
      * @param position Position of the item whose data we want
-     * @param parent ViewGroup containing the returned View
+     * @param parent   ViewGroup containing the returned View
      */
     protected View newView(int position, ViewGroup parent) {
         throw new RuntimeException("You must override newView()!");

@@ -22,8 +22,8 @@ import android.widget.ListView;
 
 /**
  * 嵌套ScrollView的ListView
- * @author service@plusub.com
  *
+ * @author service@plusub.com
  */
 public class ListViewForScrollView extends ListView {
     public ListViewForScrollView(Context context) {
@@ -38,7 +38,7 @@ public class ListViewForScrollView extends ListView {
                                  int defStyle) {
         super(context, attrs, defStyle);
     }
-        
+
     @Override
     /**
      * 重写该方法，达到使ListView适应ScrollView的效果

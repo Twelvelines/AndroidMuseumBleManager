@@ -37,17 +37,18 @@ public class FirCheckUtils {
     private Context mContext;
     private OnVersionDownloadListener onVersionDownloadListener;
 
-    public FirCheckUtils(Context context){
+    public FirCheckUtils(Context context) {
         this.mContext = context;
     }
 
     /**
      * 启动fir版本检查，检查完毕会回调结果监听器
-     * @param token fir的API token
+     *
+     * @param token                     fir的API token
      * @param onVersionDownloadListener
      */
-    public void startCheckVersion(String appId, String token, OnVersionDownloadListener onVersionDownloadListener){
-        if(Build.VERSION.SDK_INT >= 11) {
+    public void startCheckVersion(String appId, String token, OnVersionDownloadListener onVersionDownloadListener) {
+        if (Build.VERSION.SDK_INT >= 11) {
             (new CheckTask(mContext)).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, appId, token);
         } else {
             (new CheckTask(mContext)).execute(appId, token);
@@ -55,13 +56,14 @@ public class FirCheckUtils {
         this.onVersionDownloadListener = onVersionDownloadListener;
     }
 
-    public static interface OnVersionDownloadListener{
+    public static interface OnVersionDownloadListener {
         void onNewVersionGet(FirVersionBean versionBean);
     }
 
-    private class CheckTask extends AsyncTask<String, Boolean, FirVersionBean>{
+    private class CheckTask extends AsyncTask<String, Boolean, FirVersionBean> {
         private Context mContext;
-        public CheckTask(Context context){
+
+        public CheckTask(Context context) {
             this.mContext = context;
         }
 
@@ -72,19 +74,19 @@ public class FirCheckUtils {
 
         @Override
         protected void onPostExecute(FirVersionBean firVersionBean) {
-            if (onVersionDownloadListener != null){
+            if (onVersionDownloadListener != null) {
                 onVersionDownloadListener.onNewVersionGet(firVersionBean);
             }
         }
 
-        private FirVersionBean checkVersionFromFir(String appId, String token){
+        private FirVersionBean checkVersionFromFir(String appId, String token) {
             String baseUrl = "http://api.fir.im/apps/latest/%s?token=%s";
             String checkUpdateUrl = String.format(baseUrl, appId, token);
             Log.i("FirCheckUtils", "Request debug app update " + checkUpdateUrl);
             try {
                 String firResponse = FirCheckUtils.get(checkUpdateUrl);
-                Log.i("FirCheckUtils", "get request result "+firResponse);
-                if (firResponse != null){
+                Log.i("FirCheckUtils", "get request result " + firResponse);
+                if (firResponse != null) {
                     JSONObject versionJsonObj = new JSONObject(firResponse);
 
                     FirVersionBean version = new FirVersionBean();
@@ -97,7 +99,7 @@ public class FirCheckUtils {
                     version.setUpdateTime(versionJsonObj.getLong("updated_at"));
                     version.setIsUpdate(false);
                     JSONObject sizeObj = versionJsonObj.getJSONObject("binary");
-                    if (sizeObj != null){
+                    if (sizeObj != null) {
                         version.setSize(sizeObj.getInt("fsize"));
                     }
 
@@ -125,13 +127,13 @@ public class FirCheckUtils {
                             //不需要更新,当前版本高于FIR上的app版本.
                             Log.i("FirCheckUtils", " no need update");
                         }
-                        Log.i("FirCheckUtils", "get parse result currentName"+currentVersionName+" code"+currentVersionCode+" =="+version);
+                        Log.i("FirCheckUtils", "get parse result currentName" + currentVersionName + " code" + currentVersionCode + " ==" + version);
                         return version;
-                    }else{
+                    } else {
                         Log.e("FirCheckUtils", "Fail to get package info");
                     }
                 }
-            } catch (Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
             }
             return null;
@@ -166,7 +168,7 @@ public class FirCheckUtils {
                 String response = getStringFromInputStream(is);
                 return response;
             } else {
-                throw new NetworkErrorException("response status is "+responseCode);
+                throw new NetworkErrorException("response status is " + responseCode);
             }
 
         } catch (Exception e) {
@@ -197,7 +199,7 @@ public class FirCheckUtils {
                 String response = getStringFromInputStream(is);
                 return response;
             } else {
-                throw new NetworkErrorException("response status is "+responseCode);
+                throw new NetworkErrorException("response status is " + responseCode);
             }
 
         } catch (Exception e) {

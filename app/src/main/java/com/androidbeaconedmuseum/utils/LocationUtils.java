@@ -22,20 +22,22 @@ import android.location.LocationManager;
 public class LocationUtils {
     /**
      * is open gps
+     *
      * @param context
      * @return
      */
-    public static boolean isGpsProviderEnabled(Context context){
+    public static boolean isGpsProviderEnabled(Context context) {
         LocationManager service = (LocationManager) context.getSystemService(context.LOCATION_SERVICE);
         return service.isProviderEnabled(LocationManager.GPS_PROVIDER);
     }
 
     /**
      * is open network
+     *
      * @param context
      * @return
      */
-    public static boolean isNetworkProviderEnabled(Context context){
+    public static boolean isNetworkProviderEnabled(Context context) {
         LocationManager service = (LocationManager) context.getSystemService(context.LOCATION_SERVICE);
         return service.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
     }

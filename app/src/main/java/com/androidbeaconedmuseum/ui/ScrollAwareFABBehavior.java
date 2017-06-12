@@ -28,7 +28,7 @@ import android.view.animation.Interpolator;
  * version : 1.0 <br>
  * description:
  */
-public class ScrollAwareFABBehavior extends FloatingActionButton.Behavior{
+public class ScrollAwareFABBehavior extends FloatingActionButton.Behavior {
     private static final Interpolator INTERPOLATOR = new FastOutSlowInInterpolator();
     private boolean mIsAnimatingOut = false;
 

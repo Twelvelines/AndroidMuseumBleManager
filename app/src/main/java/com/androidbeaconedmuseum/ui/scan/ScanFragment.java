@@ -8,20 +8,20 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.blakequ.androidblemanager.R;
 import com.androidbeaconedmuseum.adapter.DeviceListAdapter;
 import com.androidbeaconedmuseum.containers.BluetoothLeDeviceStore;
 import com.androidbeaconedmuseum.event.UpdateEvent;
-import com.androidbeaconedmuseum.ui.MainActivity;
-import com.androidbeaconedmuseum.utils.BluetoothUtils;
-import com.blakequ.bluetooth_manager_lib.device.BeaconType;
-import com.blakequ.bluetooth_manager_lib.device.BeaconUtils;
-import com.blakequ.bluetooth_manager_lib.device.BluetoothLeDevice;
-import com.blakequ.bluetooth_manager_lib.device.ibeacon.IBeaconDevice;
 import com.androidbeaconedmuseum.location.BeaconDeviceLocation;
 import com.androidbeaconedmuseum.location.BeaconDeviceLocationData;
 import com.androidbeaconedmuseum.location.BeaconUnrecognisedException;
 import com.androidbeaconedmuseum.location.UserLocation;
+import com.androidbeaconedmuseum.ui.MainActivity;
+import com.androidbeaconedmuseum.utils.BluetoothUtils;
+import com.blakequ.androidblemanager.R;
+import com.blakequ.bluetooth_manager_lib.device.BeaconType;
+import com.blakequ.bluetooth_manager_lib.device.BeaconUtils;
+import com.blakequ.bluetooth_manager_lib.device.BluetoothLeDevice;
+import com.blakequ.bluetooth_manager_lib.device.ibeacon.IBeaconDevice;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -120,15 +120,20 @@ public class ScanFragment extends Fragment {
             locationView.setDeviceLocations(locations);
             locationView.invalidate();
             locationText.setText("User location:\n" +
-                            "Latitude: " + UserLocation.getLatitude() + "\n" +
-                            "Longitude: " + UserLocation.getLongitude() + "\n");
+                    "Latitude: " + UserLocation.getLatitude() + "\n" +
+                    "Longitude: " + UserLocation.getLongitude() + "\n");
         }
     }
 
     private List<IBeaconDevice> filterDevices(List<BluetoothLeDevice> bleDevices) {
         List<IBeaconDevice> iBeacons = new ArrayList<>();
+        // filtering out devices that
+        // 1. are of iBeacon format
+        // 2. are within a distance that guarantees the accuracy of rssi-derived distance calculation
+        // 3. are known (recorded in the preset beacon list)
         for (final BluetoothLeDevice device : bleDevices) {
             if (BeaconUtils.getBeaconType(device) == BeaconType.IBEACON &&
+                    device.getIBeaconDevice().getAccuracy() < 5 &&
                     BeaconDeviceLocationData.isRecognisedBeacon(device.getIBeaconDevice())) {
                 iBeacons.add(device.getIBeaconDevice());
             }

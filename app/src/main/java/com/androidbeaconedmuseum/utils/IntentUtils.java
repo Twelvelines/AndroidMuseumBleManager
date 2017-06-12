@@ -20,11 +20,12 @@ public class IntentUtils {
     /**
      * 是否有某个权限（某权限是否开启）
      * <p><b>注: </b>结果不一定准确，对于第三方厂商会更改<p/>
+     *
      * @param context
      * @param permissionString 权限字符串，例如android.permission.RECORD_AUDIO
      * @return
      */
-    public static boolean isHavePermission(Context context, String permissionString){
+    public static boolean isHavePermission(Context context, String permissionString) {
         PackageManager pm = context.getPackageManager();
         boolean isHave = (PackageManager.PERMISSION_GRANTED ==
                 pm.checkPermission(permissionString, context.getPackageName()));
@@ -33,10 +34,11 @@ public class IntentUtils {
 
     /**
      * 获取应用申请的权限列表
+     *
      * @param context
      * @return 如果没有权限则返回空
      */
-    public static String[] getPermissionList(Context context){
+    public static String[] getPermissionList(Context context) {
         try {
             PackageManager pm = context.getPackageManager();
             PackageInfo pack = pm.getPackageInfo(context.getPackageName(),
@@ -50,6 +52,7 @@ public class IntentUtils {
 
     /**
      * http://www.bkjia.com/Androidjc/1038751.html
+     *
      * @param context
      * @return
      */
@@ -72,7 +75,7 @@ public class IntentUtils {
     }
 
 
-    public static void startPermissionActivity(Context context){
+    public static void startPermissionActivity(Context context) {
         PackageManager pm = context.getPackageManager();
         PackageInfo info = null;
         try {
@@ -99,10 +102,11 @@ public class IntentUtils {
 
     /**
      * 或要去开启结果，必须实现startActivityForResult
+     *
      * @param context
      * @param requestCode
      */
-    public static void startLocationSettings(Activity context, int requestCode){
+    public static void startLocationSettings(Activity context, int requestCode) {
         Intent enableLocationIntent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
         context.startActivityForResult(enableLocationIntent, requestCode);
     }

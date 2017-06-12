@@ -23,14 +23,11 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.blakequ.androidblemanager.BuildConfig;
-import com.blakequ.androidblemanager.R;
 import com.androidbeaconedmuseum.adapter.FragmentPageAdapter;
 import com.androidbeaconedmuseum.containers.BluetoothLeDeviceStore;
 import com.androidbeaconedmuseum.event.UpdateEvent;
 import com.androidbeaconedmuseum.ui.connect.ConnectManyFragment;
 import com.androidbeaconedmuseum.ui.connect.ConnectOneFragment;
-
 import com.androidbeaconedmuseum.ui.scan.ScanFragment;
 import com.androidbeaconedmuseum.utils.BluetoothUtils;
 import com.androidbeaconedmuseum.utils.Constants;
@@ -39,6 +36,8 @@ import com.androidbeaconedmuseum.utils.LocationUtils;
 import com.androidbeaconedmuseum.utils.PreferencesUtils;
 import com.androidbeaconedmuseum.widget.MyAlertDialog;
 import com.androidbeaconedmuseum.widget.ScrollViewPager;
+import com.blakequ.androidblemanager.BuildConfig;
+import com.blakequ.androidblemanager.R;
 import com.blakequ.bluetooth_manager_lib.BleManager;
 import com.blakequ.bluetooth_manager_lib.BleParamsOptions;
 import com.blakequ.bluetooth_manager_lib.connect.BluetoothConnectManager;
@@ -130,7 +129,7 @@ public class MainActivity extends ToolbarActivity
 
         //这里是获取NavigationView里面view的方法
         View headerLayout = navigationView.getHeaderView(0);
-        ((TextView)headerLayout.findViewById(R.id.tv_my_version)).setText(BuildConfig.VERSION_NAME);
+        ((TextView) headerLayout.findViewById(R.id.tv_my_version)).setText(BuildConfig.VERSION_NAME);
 
         fragments = new ArrayList<Fragment>();
 
@@ -166,12 +165,12 @@ public class MainActivity extends ToolbarActivity
     @Override
     protected void onPause() {
         super.onPause();
-        if (scanManager.isScanning()){
+        if (scanManager.isScanning()) {
             scanManager.stopCycleScan();
         }
     }
 
-    public BluetoothLeDeviceStore getDeviceStore(){
+    public BluetoothLeDeviceStore getDeviceStore() {
         return mDeviceStore;
     }
 
@@ -210,7 +209,7 @@ public class MainActivity extends ToolbarActivity
 
 */
 
-    private void initScan(){
+    private void initScan() {
         mBluetoothUtils = new BluetoothUtils(this);
         mDeviceStore = new BluetoothLeDeviceStore();
         scanManager = BluetoothScanManager.getInstance(this);
@@ -218,7 +217,7 @@ public class MainActivity extends ToolbarActivity
         scanManager.setScanOverListener(new ScanOverListener() {
             @Override
             public void onScanOver() {
-                if (scanManager.isPauseScanning()){
+                if (scanManager.isPauseScanning()) {
                     invalidateOptionsMenu();
                 }
             }
@@ -236,11 +235,11 @@ public class MainActivity extends ToolbarActivity
                         .setAction("Detail", new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                if (errorCode == SCAN_FAILED_LOCATION_CLOSE){
+                                if (errorCode == SCAN_FAILED_LOCATION_CLOSE) {
                                     Toast.makeText(MainActivity.this, "Location is closed, you should open first", Toast.LENGTH_LONG).show();
-                                }else if(errorCode == SCAN_FAILED_LOCATION_PERMISSION_FORBID){
+                                } else if (errorCode == SCAN_FAILED_LOCATION_PERMISSION_FORBID) {
                                     Toast.makeText(MainActivity.this, "You have not permission of location", Toast.LENGTH_LONG).show();
-                                }else{
+                                } else {
                                     Toast.makeText(MainActivity.this, "Other exception", Toast.LENGTH_LONG).show();
                                 }
                             }
@@ -250,7 +249,7 @@ public class MainActivity extends ToolbarActivity
             @Override
             public void onScanResult(int callbackType, ScanResultCompat result) {
                 super.onScanResult(callbackType, result);
-                Logger.i("scan device "+result.getLeDevice().getAddress()+" "+result.getScanRecord().getDeviceName());
+                Logger.i("scan device " + result.getLeDevice().getAddress() + " " + result.getScanRecord().getDeviceName());
                 if (filterSwitch) {
                     if (filterRssi <= result.getRssi()) {
                         if (filterName == null || filterName.equals("")) {
@@ -267,9 +266,9 @@ public class MainActivity extends ToolbarActivity
         });
     }
 
-    public void startScan(){
-        if (checkPermission()){
-            if (checkIsBleState()){
+    public void startScan() {
+        if (checkPermission()) {
+            if (checkIsBleState()) {
                 mDeviceStore.clear();
                 EventBus.getDefault().post(new UpdateEvent(UpdateEvent.Type.SCAN_UPDATE));
 //                scanManager.startCycleScan();
@@ -281,20 +280,20 @@ public class MainActivity extends ToolbarActivity
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if(requestCode == 11 || requestCode == 12) {//请求位置信息
-            if (LocationUtils.isGpsProviderEnabled(this)){
+        if (requestCode == 11 || requestCode == 12) {//请求位置信息
+            if (LocationUtils.isGpsProviderEnabled(this)) {
                 Toast.makeText(this, R.string.ble_location_is_open, Toast.LENGTH_LONG).show();
-            }else{
-                if (requestCode == 11){
+            } else {
+                if (requestCode == 11) {
                     showReOpenLocationDialog();
-                }else{
+                } else {
                     Toast.makeText(this, R.string.ble_location_not_open_notice, Toast.LENGTH_LONG).show();
                 }
             }
-        }else{
-            if (resultCode != Activity.RESULT_OK){
+        } else {
+            if (resultCode != Activity.RESULT_OK) {
 //                checkIsBleState();
-            }else{
+            } else {
                 startScan();
             }
         }
@@ -311,7 +310,7 @@ public class MainActivity extends ToolbarActivity
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEventUpdate(UpdateEvent event){
+    public void onEventUpdate(UpdateEvent event) {
 
     }
 
@@ -320,7 +319,7 @@ public class MainActivity extends ToolbarActivity
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
-        if (currentTab == 0){
+        if (currentTab == 0) {
             menu.findItem(R.id.menu_connect).setVisible(false);
             menu.findItem(R.id.menu_disconnect).setVisible(false);
             if (!scanManager.isScanning()) {
@@ -334,7 +333,7 @@ public class MainActivity extends ToolbarActivity
                 menu.findItem(R.id.menu_filter).setVisible(false);
                 menu.findItem(R.id.menu_refresh).setActionView(R.layout.actionbar_progress_indeterminate);
             }
-        }else if(currentTab == 1){
+        } else if (currentTab == 1) {
             menu.findItem(R.id.menu_stop).setVisible(false);
             menu.findItem(R.id.menu_scan).setVisible(false);
             menu.findItem(R.id.menu_filter).setVisible(false);
@@ -342,24 +341,24 @@ public class MainActivity extends ToolbarActivity
             menu.findItem(R.id.menu_connect).setVisible(false);
             menu.findItem(R.id.menu_disconnect).setVisible(false);
             int size = BluetoothConnectManager.getInstance(this).getConnectedDevice().size();
-            if (size > 0){
-                if(BluetoothConnectManager.getInstance(this).getCurrentState() == ConnectState.CONNECTING){
+            if (size > 0) {
+                if (BluetoothConnectManager.getInstance(this).getCurrentState() == ConnectState.CONNECTING) {
                     menu.findItem(R.id.menu_refresh).setActionView(R.layout.actionbar_progress_indeterminate);
-                }else{
+                } else {
                     menu.findItem(R.id.menu_disconnect).setVisible(true);
                 }
             }
-        }else {
+        } else {
             menu.findItem(R.id.menu_stop).setVisible(false);
             menu.findItem(R.id.menu_scan).setVisible(false);
             menu.findItem(R.id.menu_filter).setVisible(false);
             menu.findItem(R.id.menu_refresh).setActionView(null);
             menu.findItem(R.id.menu_connect).setVisible(false);
             menu.findItem(R.id.menu_disconnect).setVisible(false);
-            if (MultiConnectManager.getInstance(this).isConnectingDevice()){
+            if (MultiConnectManager.getInstance(this).isConnectingDevice()) {
                 menu.findItem(R.id.menu_refresh).setActionView(R.layout.actionbar_progress_indeterminate);
                 menu.findItem(R.id.menu_disconnect).setVisible(true);
-            }else{
+            } else {
                 menu.findItem(R.id.menu_connect).setVisible(true);
             }
         }
@@ -385,7 +384,7 @@ public class MainActivity extends ToolbarActivity
                 startActivity(new Intent(this, FilterActivity.class));
                 break;
             case R.id.menu_connect:
-                if (mDeviceStore.size() == 0){
+                if (mDeviceStore.size() == 0) {
                     Snackbar.make(fab, "Not bluetooth device, please scan device first", Snackbar.LENGTH_LONG)
                             .setAction("Scan Now", new View.OnClickListener() {
                                 @Override
@@ -394,7 +393,7 @@ public class MainActivity extends ToolbarActivity
                                     startScan();
                                 }
                             }).show();
-                }else {
+                } else {
                     MultiConnectManager.getInstance(this).startConnect();
                 }
                 break;
@@ -428,16 +427,16 @@ public class MainActivity extends ToolbarActivity
             mViewPager.setCurrentItem(2, false);
         } else if (id == R.id.nav_manage) {
             scanManager.startScanNow();
-            mViewPager.setCurrentItem(3,false);
+            mViewPager.setCurrentItem(3, false);
 
-           // Intent intent = new Intent(Intent.ACTION_VIEW);
-           // intent.setData(Uri.parse("https://github.com/haodynasty/AndroidBleManager"));
-           // startActivity(intent);
+            // Intent intent = new Intent(Intent.ACTION_VIEW);
+            // intent.setData(Uri.parse("https://github.com/haodynasty/AndroidBleManager"));
+            // startActivity(intent);
 
         } else if (id == R.id.nav_share) {
             mDeviceStore.shareDataAsEmail(this);
         } else if (id == R.id.nav_send) {
-            Intent data=new Intent(Intent.ACTION_SENDTO);
+            Intent data = new Intent(Intent.ACTION_SENDTO);
             data.setData(Uri.parse("mailto:blakequ@gmail.com"));
             data.putExtra(Intent.EXTRA_SUBJECT, "AndroidBleManger Feedback");
             data.putExtra(Intent.EXTRA_TEXT, "Please input you question and advise:\n");
@@ -449,8 +448,8 @@ public class MainActivity extends ToolbarActivity
         return true;
     }
 
-    public void setCurrentIndex(int index){
-        if (index >= 0 && index < fragments.size()){
+    public void setCurrentIndex(int index) {
+        if (index >= 0 && index < fragments.size()) {
             mViewPager.setCurrentItem(index, false);
 
         }
@@ -466,9 +465,9 @@ public class MainActivity extends ToolbarActivity
         public void onPageSelected(int position) {
             currentTab = position;
             EventBus.getDefault().post(new UpdateEvent(UpdateEvent.Type.TAB_SWITCH, position));
-            if (position == 0){
+            if (position == 0) {
                 fab.setVisibility(View.GONE);
-            }else {
+            } else {
                 fab.setVisibility(View.VISIBLE);
             }
             invalidateOptionsMenu();
@@ -480,18 +479,18 @@ public class MainActivity extends ToolbarActivity
         }
     };
 
-    private boolean checkIsBleState(){
-        if (!mBluetoothUtils.isBluetoothLeSupported()){
+    private boolean checkIsBleState() {
+        if (!mBluetoothUtils.isBluetoothLeSupported()) {
             showNotSupportDialog();
-        }else if(!mBluetoothUtils.isBluetoothOn()){
+        } else if (!mBluetoothUtils.isBluetoothOn()) {
             showOpenBleDialog();
-        }else{
+        } else {
             return true;
         }
         return false;
     }
 
-    private void showNotSupportDialog(){
+    private void showNotSupportDialog() {
         MyAlertDialog.getDialog(this, R.string.ble_not_support, R.string.ble_exit_app,
                 new DialogInterface.OnClickListener() {
 
@@ -503,7 +502,7 @@ public class MainActivity extends ToolbarActivity
                 }).show();
     }
 
-    private void showExitDialog(){
+    private void showExitDialog() {
         MyAlertDialog.getDialog(this, R.string.exit_app, R.string.ble_exit_app, R.string.cancel,
                 new DialogInterface.OnClickListener() {
 
@@ -526,15 +525,15 @@ public class MainActivity extends ToolbarActivity
      * 检查无法扫描到的情况dialog
      */
     private void showCheckBleNotScanDialog() {
-        if (Build.VERSION.SDK_INT >= 23){
+        if (Build.VERSION.SDK_INT >= 23) {
             MyAlertDialog.getDialog(this, R.string.ble_not_scan, R.string.ble_not_scan_bt1, R.string.cancel,
                     new DialogInterface.OnClickListener() {
 
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            if (!LocationUtils.isGpsProviderEnabled(MainActivity.this)){
+                            if (!LocationUtils.isGpsProviderEnabled(MainActivity.this)) {
                                 showOpenLocationSettingDialog();
-                            }else{
+                            } else {
                                 Toast.makeText(MainActivity.this, R.string.ble_location_has_open, Toast.LENGTH_LONG).show();
                             }
                         }
@@ -546,7 +545,7 @@ public class MainActivity extends ToolbarActivity
                             dialog.dismiss();
                         }
                     }).show();
-        }else{
+        } else {
             MyAlertDialog.getDialog(this, R.string.ble_not_scan1, R.string.cancel,
                     new DialogInterface.OnClickListener() {
 
@@ -605,7 +604,7 @@ public class MainActivity extends ToolbarActivity
     /**
      * 打开位置信息
      */
-    private void showOpenLocationSettingDialog(){
+    private void showOpenLocationSettingDialog() {
         View view = LayoutInflater.from(this).inflate(R.layout.include_location_dialog, null);
         MyAlertDialog.getViewDialog(this, view, R.string.ble_location_open, R.string.cancel,
                 new DialogInterface.OnClickListener() {
@@ -629,13 +628,14 @@ public class MainActivity extends ToolbarActivity
 
     /**
      * 检查权限
+     *
      * @return
      */
-    public boolean checkPermission(){
-        if (Build.VERSION.SDK_INT >= 23){
+    public boolean checkPermission() {
+        if (Build.VERSION.SDK_INT >= 23) {
             boolean hasPermission = PermissionUtils.hasSelfPermissions(this, permissionList);
             MainActivityPermissionsDispatcher.showCheckPermissionStateWithCheck(this);
-            if (!LocationUtils.isGpsProviderEnabled(this)){
+            if (!LocationUtils.isGpsProviderEnabled(this)) {
                 return false;
             }
             return hasPermission;
@@ -645,21 +645,23 @@ public class MainActivity extends ToolbarActivity
 
 
     //请求权限
+
     /**
      * 这个方法中写正常的逻辑（假设有该权限应该做的事）
      */
     @NeedsPermission({Manifest.permission.BLUETOOTH_ADMIN, Manifest.permission.BLUETOOTH,
             Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION
-            ,Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE})
-    void showCheckPermissionState(){
+            , Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE})
+    void showCheckPermissionState() {
         //检查是否开启位置信息（如果没有开启，则无法扫描到任何蓝牙设备在6.0）
-        if (!LocationUtils.isGpsProviderEnabled(this)){
+        if (!LocationUtils.isGpsProviderEnabled(this)) {
             showOpenLocationSettingDialog();
         }
     }
 
     /**
      * 弹出权限同意窗口之前调用的提示窗口
+     *
      * @param request
      */
     @OnShowRationale({Manifest.permission.BLUETOOTH_ADMIN, Manifest.permission.BLUETOOTH,

@@ -10,10 +10,10 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.blakequ.androidblemanager.R;
 import com.androidbeaconedmuseum.adapter.viewadapter.MergeAdapter;
 import com.androidbeaconedmuseum.ui.ToolbarActivity;
 import com.androidbeaconedmuseum.utils.TimeFormatter;
+import com.blakequ.androidblemanager.R;
 import com.blakequ.bluetooth_manager_lib.device.BeaconType;
 import com.blakequ.bluetooth_manager_lib.device.BeaconUtils;
 import com.blakequ.bluetooth_manager_lib.device.BluetoothLeDevice;
@@ -85,13 +85,13 @@ public class DeviceDetailsActivity extends ToolbarActivity {
         tvBondingState.setText(device.getBluetoothDeviceBondState());
 
         final String supportedServices;
-        if(device.getBluetoothDeviceKnownSupportedServices().isEmpty()){
+        if (device.getBluetoothDeviceKnownSupportedServices().isEmpty()) {
             supportedServices = getString(R.string.no_known_services);
         } else {
             final StringBuilder sb = new StringBuilder();
 
-            for(final BluetoothService service : device.getBluetoothDeviceKnownSupportedServices()){
-                if(sb.length() > 0){
+            for (final BluetoothService service : device.getBluetoothDeviceKnownSupportedServices()) {
+                if (sb.length() > 0) {
                     sb.append(", ");
                 }
 
@@ -131,7 +131,7 @@ public class DeviceDetailsActivity extends ToolbarActivity {
         tvMinor.setText(iBeaconData.getMinor() + " (" + hexEncode(iBeaconData.getMinor()) + ")");
         tvTxPower.setText(iBeaconData.getCalibratedTxPower() + " (" + hexEncode(iBeaconData.getCalibratedTxPower()) + ")");
 
-        System.out.println("--ibeacon uuid:"+iBeaconData.getUUID());
+        System.out.println("--ibeacon uuid:" + iBeaconData.getUUID());
         adapter.addView(lt);
     }
 

@@ -15,13 +15,13 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.blakequ.androidblemanager.R;
 import com.androidbeaconedmuseum.adapter.DescListAdapter;
 import com.androidbeaconedmuseum.adapter.NotifyListAdapter;
 import com.androidbeaconedmuseum.event.UpdateEvent;
 import com.androidbeaconedmuseum.ui.ToolbarActivity;
 import com.androidbeaconedmuseum.utils.CustomTextWatcher;
 import com.androidbeaconedmuseum.widget.ListViewForScrollView;
+import com.blakequ.androidblemanager.R;
 import com.blakequ.bluetooth_manager_lib.connect.BluetoothConnectManager;
 import com.blakequ.bluetooth_manager_lib.connect.BluetoothSubScribeData;
 import com.blakequ.bluetooth_manager_lib.connect.ConnectState;
@@ -58,7 +58,7 @@ import butterknife.ButterKnife;
  * version : 1.0 <br>
  * description:
  */
-public class CharacteristicDetailActivity extends ToolbarActivity implements View.OnClickListener{
+public class CharacteristicDetailActivity extends ToolbarActivity implements View.OnClickListener {
     public static final String EXTRA_DEVICE = "extra_device";
     public static final String EXTRA_UUID = "extra_uuid";
     @Bind(R.id.char_device_name)
@@ -116,12 +116,12 @@ public class CharacteristicDetailActivity extends ToolbarActivity implements Vie
         String uuid = intent.getStringExtra(EXTRA_UUID);
         UUID serverUUid = null;
         gatt = connectManager.getBluetoothGatt(mDevice.getAddress());
-        if (gatt != null){
+        if (gatt != null) {
             List<BluetoothGattService> list = gatt.getServices();
-            if (list != null){
-                for (BluetoothGattService service:list){
-                    for (BluetoothGattCharacteristic characteristics : service.getCharacteristics()){
-                        if (characteristics.getUuid().toString().equals(uuid)){
+            if (list != null) {
+                for (BluetoothGattService service : list) {
+                    for (BluetoothGattCharacteristic characteristics : service.getCharacteristics()) {
+                        if (characteristics.getUuid().toString().equals(uuid)) {
                             characteristic = characteristics;
                             serverUUid = service.getUuid();
                             break;
@@ -129,21 +129,21 @@ public class CharacteristicDetailActivity extends ToolbarActivity implements Vie
                     }
                 }
             }
-        }else {
+        } else {
             Logger.e("gatt is null");
         }
-        if (characteristic != null){
+        if (characteristic != null) {
             initView();
             final String unknownCharaString = getResources().getString(R.string.unknown_characteristic);
             mTvCharName.setText(GattAttributeResolver.getAttributeName(uuid, unknownCharaString));
             mTvName.setText(mDevice.getAdRecordStore().getLocalNameComplete());
-            mTvCharUuid.setText("uuid: "+uuid.substring(4,8));
+            mTvCharUuid.setText("uuid: " + uuid.substring(4, 8));
             mTvProperties.setText(getPropertyString(characteristic.getProperties()));
             DescListAdapter mAdapter = new DescListAdapter(this);
             mTvDescriptorList.setAdapter(mAdapter);
             mTvDescriptorList.setVisibility(View.VISIBLE);
             checkProperty(characteristic.getProperties());
-            for (BluetoothGattDescriptor gattDescriptor:characteristic.getDescriptors()){
+            for (BluetoothGattDescriptor gattDescriptor : characteristic.getDescriptors()) {
                 mAdapter.add(gattDescriptor);
                 Logger.i("desc:" + gattDescriptor.getUuid());
             }
@@ -154,18 +154,18 @@ public class CharacteristicDetailActivity extends ToolbarActivity implements Vie
             //2.clean history descriptor data
             connectManager.cleanSubscribeData();
             //3.add subscribe params
-            if (BluetoothUtils.isCharacteristicRead(characteristic.getProperties())){
+            if (BluetoothUtils.isCharacteristicRead(characteristic.getProperties())) {
                 connectManager.addBluetoothSubscribeData(
                         new BluetoothSubScribeData.Builder().setCharacteristicRead(characteristic.getUuid()).build());
             }
-            if (BluetoothUtils.isCharacteristicNotify(characteristic.getProperties())){
+            if (BluetoothUtils.isCharacteristicNotify(characteristic.getProperties())) {
                 connectManager.addBluetoothSubscribeData(
                         new BluetoothSubScribeData.Builder().setCharacteristicNotify(characteristic.getUuid()).build()
                 );
             }
             //start descriptor
             boolean isSuccess = connectManager.startSubscribe(gatt);
-        }else{
+        } else {
             setOperatorEnable(false);
         }
     }
@@ -177,7 +177,7 @@ public class CharacteristicDetailActivity extends ToolbarActivity implements Vie
         connectManager.removeConnectStateListener(listener);
     }
 
-    private void initView(){
+    private void initView() {
         mTvWrite.setOnClickListener(this);
         mTvRead.setOnClickListener(this);
         mTvNotify.setOnClickListener(this);
@@ -185,7 +185,7 @@ public class CharacteristicDetailActivity extends ToolbarActivity implements Vie
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.char_read:
 //                gatt.readCharacteristic(characteristic);
                 //or
@@ -250,16 +250,16 @@ public class CharacteristicDetailActivity extends ToolbarActivity implements Vie
                         writeValue = textView2.getText().toString().trim();
                         writeValue = writeValue.replaceAll(" ", "");
                         int len = writeValue.length();
-                        if (len > 0 && len%2 == 0) {
+                        if (len > 0 && len % 2 == 0) {
                             byte[] bytes = invertStringToBytes(writeValue);
-                            if (bytes != null){
+                            if (bytes != null) {
                                 characteristic.setValue(bytes);
                                 gatt.writeCharacteristic(characteristic);
-                                mTvWriteValue.setText("0x"+writeValue);
-                            }else{
+                                mTvWriteValue.setText("0x" + writeValue);
+                            } else {
                                 Logger.e("write value fail");
                             }
-                        }else {
+                        } else {
                             Toast.makeText(CharacteristicDetailActivity.this, "Input value is invalid, you should input like(hex value): 01, 1101, 0A11", Toast.LENGTH_LONG).show();
                         }
                     }
@@ -268,11 +268,11 @@ public class CharacteristicDetailActivity extends ToolbarActivity implements Vie
                 .show();
     }
 
-    private byte[] invertStringToBytes(String value){
-        int len = value.length()/2;
-        if (len > 0){
+    private byte[] invertStringToBytes(String value) {
+        int len = value.length() / 2;
+        if (len > 0) {
             byte[] bytes = new byte[len];
-            for (int i=0; i<len; i++){
+            for (int i = 0; i < len; i++) {
                 Integer val = Integer.valueOf(value.substring(i * 2, i * 2 + 2), 16);
                 bytes[i] = val.byteValue();
             }
@@ -281,7 +281,7 @@ public class CharacteristicDetailActivity extends ToolbarActivity implements Vie
         return null;
     }
 
-    private String getPropertyString(int property){
+    private String getPropertyString(int property) {
         StringBuilder sb = new StringBuilder();
         // 可读
         if ((property & BluetoothGattCharacteristic.PROPERTY_READ) > 0) {
@@ -298,14 +298,14 @@ public class CharacteristicDetailActivity extends ToolbarActivity implements Vie
             sb.append("Notity Indicate ");
         }
         // 广播
-        if ((property & BluetoothGattCharacteristic.PROPERTY_BROADCAST) > 0){
+        if ((property & BluetoothGattCharacteristic.PROPERTY_BROADCAST) > 0) {
             sb.append("Broadcast ");
         }
         sb.deleteCharAt(sb.length() - 1);
         return sb.toString();
     }
 
-    private void checkProperty(int property){
+    private void checkProperty(int property) {
         writeView.setVisibility(View.GONE);
         readView.setVisibility(View.GONE);
         notifyView.setVisibility(View.GONE);
@@ -329,14 +329,14 @@ public class CharacteristicDetailActivity extends ToolbarActivity implements Vie
             }
         }
         // 广播
-        if ((property & BluetoothGattCharacteristic.PROPERTY_BROADCAST) > 0){
+        if ((property & BluetoothGattCharacteristic.PROPERTY_BROADCAST) > 0) {
         }
     }
 
     private ConnectStateListener listener = new ConnectStateListener() {
         @Override
         public void onConnectStateChanged(String address, ConnectState state) {
-            switch (state){
+            switch (state) {
                 case CONNECTED:
                     setOperatorEnable(true);
                     break;
@@ -349,13 +349,13 @@ public class CharacteristicDetailActivity extends ToolbarActivity implements Vie
         }
     };
 
-    private void setOperatorEnable(boolean enable){
-        if (enable){
+    private void setOperatorEnable(boolean enable) {
+        if (enable) {
             mTvState.setVisibility(View.GONE);
             mTvRead.setEnabled(true);
             mTvWrite.setEnabled(true);
             mTvNotify.setEnabled(true);
-        }else{
+        } else {
             mTvState.setVisibility(View.VISIBLE);
             mTvRead.setEnabled(false);
             mTvWrite.setEnabled(false);
@@ -364,22 +364,22 @@ public class CharacteristicDetailActivity extends ToolbarActivity implements Vie
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEventReceiveNotify(UpdateEvent event){
-        if (event != null && event.getType() == UpdateEvent.Type.BLE_DATA){
+    public void onEventReceiveNotify(UpdateEvent event) {
+        if (event != null && event.getType() == UpdateEvent.Type.BLE_DATA) {
             BluetoothGattCharacteristic characteristic = (BluetoothGattCharacteristic) event.getObj();
             final byte[] dataArr = characteristic.getValue();
             final String flag = event.getMsg();
-            if (dataArr != null && dataArr.length > 0){
-                if (flag.equals("read")){
-                    mTvReadValue.setText("byte:"+ ByteUtils.byteArrayToHexString(dataArr)+" ,string:"+ByteUtils.byteArrayToHexString(dataArr));
-                }else if(flag.equals("write")){
-                    mTvWriteValue.setText("byte:"+ByteUtils.byteArrayToHexString(dataArr)+" ,string:"+ ByteUtils.byteArrayToHexString(dataArr));
-                }else if(flag.equals("notify")){
+            if (dataArr != null && dataArr.length > 0) {
+                if (flag.equals("read")) {
+                    mTvReadValue.setText("byte:" + ByteUtils.byteArrayToHexString(dataArr) + " ,string:" + ByteUtils.byteArrayToHexString(dataArr));
+                } else if (flag.equals("write")) {
+                    mTvWriteValue.setText("byte:" + ByteUtils.byteArrayToHexString(dataArr) + " ,string:" + ByteUtils.byteArrayToHexString(dataArr));
+                } else if (flag.equals("notify")) {
                     notifyListAdapter.addHead(ByteUtils.byteArrayToHexString(dataArr));
-                }else{
+                } else {
                     Toast.makeText(CharacteristicDetailActivity.this, "Fail to operator info", Toast.LENGTH_LONG).show();
                 }
-            }else {
+            } else {
                 Toast.makeText(CharacteristicDetailActivity.this, "Chara data is null", Toast.LENGTH_LONG).show();
             }
         }
@@ -391,8 +391,8 @@ public class CharacteristicDetailActivity extends ToolbarActivity implements Vie
             return;
         }
         gatt.setCharacteristicNotification(characteristic, enabled);
-        if (enabled){
-            for (BluetoothGattDescriptor descriptor:characteristic.getDescriptors()){
+        if (enabled) {
+            for (BluetoothGattDescriptor descriptor : characteristic.getDescriptors()) {
                 descriptor.setValue(BluetoothGattDescriptor.ENABLE_NOTIFICATION_VALUE);
                 gatt.writeDescriptor(descriptor);
             }

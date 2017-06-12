@@ -14,6 +14,6 @@
         android:background="?attr/colorPrimary"
         android:fitsSystemWindows="true"
         app:popupTheme="@style/AppTheme.PopupOverlay"
-        app:layout_scrollFlags="scroll|enterAlways"/>
+        app:layout_scrollFlags="scroll|enterAlways" />
 
 </android.support.design.widget.AppBarLayout>

@@ -13,12 +13,12 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.blakequ.androidblemanager.R;
 import com.androidbeaconedmuseum.adapter.DeviceStateAdapter;
 import com.androidbeaconedmuseum.containers.BluetoothLeDeviceStore;
 import com.androidbeaconedmuseum.event.UpdateEvent;
 import com.androidbeaconedmuseum.ui.MainActivity;
 import com.androidbeaconedmuseum.ui.scan.DeviceControlActivity;
+import com.blakequ.androidblemanager.R;
 import com.blakequ.bluetooth_manager_lib.BleManager;
 import com.blakequ.bluetooth_manager_lib.connect.BluetoothConnectManager;
 import com.blakequ.bluetooth_manager_lib.connect.ConnectState;
@@ -50,7 +50,7 @@ import butterknife.ButterKnife;
  * version : 1.0 <br>
  * description:
  */
-public class ConnectOneFragment extends Fragment{
+public class ConnectOneFragment extends Fragment {
 
     private View rootView;
     private BleDeviceDialog dialog;
@@ -73,7 +73,7 @@ public class ConnectOneFragment extends Fragment{
                 mTvDevice.setText(address);
                 mTvState.setText(state.toString());
                 mAdapter.updateState(address, state);
-                switch (state){
+                switch (state) {
                     case CONNECTING:
                         break;
                     case CONNECTED:
@@ -94,7 +94,7 @@ public class ConnectOneFragment extends Fragment{
         dialog.setOnClickListener(new BleDeviceDialog.OnClickListener() {
             @Override
             public void onSelectDevice(List<BluetoothLeDevice> list) {
-                if (list != null && list.size() > 0){
+                if (list != null && list.size() > 0) {
                     mAdapter.addAll(list);
                 }
             }
@@ -118,7 +118,7 @@ public class ConnectOneFragment extends Fragment{
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 BluetoothLeDevice device = (BluetoothLeDevice) mAdapter.getItem(position);
-                if (device != null){
+                if (device != null) {
 //                    connectManager.connect(device.getAddress());
                     BleManager.getScanManager(getActivity()).stopCycleScan();
                     final Intent intent = new Intent(getActivity(), DeviceControlActivity.class);
@@ -131,10 +131,10 @@ public class ConnectOneFragment extends Fragment{
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEventRefresh(UpdateEvent event){
-        switch (event.getType()){
+    public void onEventRefresh(UpdateEvent event) {
+        switch (event.getType()) {
             case POP_SHOW:
-                if (event.getArg1() == 1){
+                if (event.getArg1() == 1) {
                     final MainActivity activity = (MainActivity) getActivity();
                     if (activity != null) {
                         BluetoothLeDeviceStore store = activity.getDeviceStore();
@@ -147,7 +147,7 @@ public class ConnectOneFragment extends Fragment{
                                             activity.startScan();
                                         }
                                     }).show();
-                        }else {
+                        } else {
                             dialog.addDeviceList(store.getDeviceList());
                             dialog.showAtLocation(rootView, Gravity.BOTTOM, 0, 0);
                         }
@@ -156,7 +156,7 @@ public class ConnectOneFragment extends Fragment{
                 break;
             case TAB_SWITCH:
                 int tab = event.getArg1();
-                if (tab != 1){
+                if (tab != 1) {
                     connectManager.release();
                     mAdapter.clear();
                 }

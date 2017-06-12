@@ -4,9 +4,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 
-import com.blakequ.androidblemanager.R;
 import com.androidbeaconedmuseum.utils.CsvWriterHelper;
 import com.androidbeaconedmuseum.utils.TimeFormatter;
+import com.blakequ.androidblemanager.R;
 import com.blakequ.bluetooth_manager_lib.device.BeaconType;
 import com.blakequ.bluetooth_manager_lib.device.BeaconUtils;
 import com.blakequ.bluetooth_manager_lib.device.BluetoothLeDevice;
@@ -67,7 +67,7 @@ public class BluetoothLeDeviceStore {
         return methodResult;
     }
 
-    public int size(){
+    public int size() {
         return mDeviceMap.size();
     }
 

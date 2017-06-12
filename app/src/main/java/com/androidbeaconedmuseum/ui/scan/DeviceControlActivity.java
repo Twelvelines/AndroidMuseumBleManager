@@ -33,9 +33,9 @@ import android.widget.SimpleExpandableListAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.blakequ.androidblemanager.R;
 import com.androidbeaconedmuseum.event.UpdateEvent;
 import com.androidbeaconedmuseum.ui.ToolbarActivity;
+import com.blakequ.androidblemanager.R;
 import com.blakequ.bluetooth_manager_lib.connect.BluetoothConnectManager;
 import com.blakequ.bluetooth_manager_lib.connect.ConnectState;
 import com.blakequ.bluetooth_manager_lib.connect.ConnectStateListener;
@@ -147,7 +147,7 @@ public class DeviceControlActivity extends ToolbarActivity {
             public void onCharacteristicRead(final BluetoothGatt gatt, final BluetoothGattCharacteristic characteristic, final int status) {
                 if (status == BluetoothGatt.GATT_SUCCESS) {
                     EventBus.getDefault().post(new UpdateEvent(UpdateEvent.Type.BLE_DATA, characteristic, "read"));
-                }else{
+                } else {
                     EventBus.getDefault().post(new UpdateEvent(UpdateEvent.Type.BLE_DATA, characteristic, "fail"));
                     Log.e(TAG, "fail to read characteristic");
                 }
@@ -158,7 +158,7 @@ public class DeviceControlActivity extends ToolbarActivity {
                 super.onCharacteristicWrite(gatt, characteristic, status);
                 if (status == BluetoothGatt.GATT_SUCCESS) {
                     EventBus.getDefault().post(new UpdateEvent(UpdateEvent.Type.BLE_DATA, characteristic, "write"));
-                }else{
+                } else {
                     EventBus.getDefault().post(new UpdateEvent(UpdateEvent.Type.BLE_DATA, characteristic, "fail"));
                     Log.e(TAG, "fail to write characteristic");
                 }
@@ -173,11 +173,11 @@ public class DeviceControlActivity extends ToolbarActivity {
             @Override
             public void onConnectionStateChange(BluetoothGatt gatt, final int status, int newState) {
                 super.onConnectionStateChange(gatt, status, newState);
-                if (newState == BluetoothProfile.STATE_DISCONNECTED){
+                if (newState == BluetoothProfile.STATE_DISCONNECTED) {
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            Toast.makeText(DeviceControlActivity.this, "Disconnect! error："+ GattError.parseConnectionError(status), Toast.LENGTH_LONG).show();
+                            Toast.makeText(DeviceControlActivity.this, "Disconnect! error：" + GattError.parseConnectionError(status), Toast.LENGTH_LONG).show();
                         }
                     });
                 }
@@ -186,7 +186,7 @@ public class DeviceControlActivity extends ToolbarActivity {
             @Override
             public void onServicesDiscovered(final BluetoothGatt gatt, int status) {
                 super.onServicesDiscovered(gatt, status);
-                if (status == BluetoothGatt.GATT_SUCCESS){
+                if (status == BluetoothGatt.GATT_SUCCESS) {
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
@@ -207,7 +207,7 @@ public class DeviceControlActivity extends ToolbarActivity {
             menu.findItem(R.id.menu_disconnect).setVisible(true);
             menu.findItem(R.id.menu_refresh).setActionView(null);
         } else {
-            if (connectState != 2){
+            if (connectState != 2) {
                 menu.findItem(R.id.menu_refresh).setActionView(R.layout.actionbar_progress_indeterminate);
             }
             menu.findItem(R.id.menu_connect).setVisible(true);
@@ -290,8 +290,8 @@ public class DeviceControlActivity extends ToolbarActivity {
             final Map<String, String> currentServiceData = new HashMap<>();
             uuid = gattService.getUuid().toString();
             currentServiceData.put(LIST_NAME, GattAttributeResolver.getAttributeName(uuid, unknownServiceString));
-            currentServiceData.put(LIST_UUID, uuid.substring(4,8));
-            System.out.println("---service name:"+currentServiceData.get(LIST_NAME));
+            currentServiceData.put(LIST_UUID, uuid.substring(4, 8));
+            System.out.println("---service name:" + currentServiceData.get(LIST_NAME));
             System.out.println("---service uuid:" + uuid);
             gattServiceData.add(currentServiceData);
 
@@ -306,13 +306,13 @@ public class DeviceControlActivity extends ToolbarActivity {
                 uuid = gattCharacteristic.getUuid().toString();
                 String property = getPropertyString(gattCharacteristic.getProperties());
                 currentCharaData.put(LIST_NAME, GattAttributeResolver.getAttributeName(uuid, unknownCharaString));
-                currentCharaData.put(LIST_UUID, uuid.substring(4,8)+" "+property);
+                currentCharaData.put(LIST_UUID, uuid.substring(4, 8) + " " + property);
                 System.out.println("-----char name:" + currentCharaData.get(LIST_NAME));
-                System.out.println("-----chat uuid:"+ uuid);
+                System.out.println("-----chat uuid:" + uuid);
                 gattCharacteristicGroupData.add(currentCharaData);
-                for (BluetoothGattDescriptor gattDescriptor:gattCharacteristic.getDescriptors()){
+                for (BluetoothGattDescriptor gattDescriptor : gattCharacteristic.getDescriptors()) {
                     System.out.println("--------des name:" + gattDescriptor.getUuid());
-                    System.out.println("--------des uuid:" + gattDescriptor.getValue()+" "+gattDescriptor.getPermissions());
+                    System.out.println("--------des uuid:" + gattDescriptor.getValue() + " " + gattDescriptor.getPermissions());
                 }
             }
 
@@ -338,10 +338,11 @@ public class DeviceControlActivity extends ToolbarActivity {
 
     /**
      * get property,http://blog.csdn.net/chenxh515/article/details/45723299
+     *
      * @param property
      * @return
      */
-    private String getPropertyString(int property){
+    private String getPropertyString(int property) {
         StringBuilder sb = new StringBuilder("(");
         //Read
         if ((property & BluetoothGattCharacteristic.PROPERTY_READ) > 0) {
@@ -358,7 +359,7 @@ public class DeviceControlActivity extends ToolbarActivity {
             sb.append("Notity Indicate ");
         }
         //Broadcast
-        if ((property & BluetoothGattCharacteristic.PROPERTY_BROADCAST) > 0){
+        if ((property & BluetoothGattCharacteristic.PROPERTY_BROADCAST) > 0) {
             sb.append("Broadcast ");
         }
         sb.deleteCharAt(sb.length() - 1);

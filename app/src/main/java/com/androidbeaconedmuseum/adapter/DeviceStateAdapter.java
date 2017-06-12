@@ -34,10 +34,11 @@ import butterknife.ButterKnife;
  * version : 1.0 <br>
  * description:
  */
-public class DeviceStateAdapter extends BaseArrayListAdapter<BluetoothLeDevice>{
+public class DeviceStateAdapter extends BaseArrayListAdapter<BluetoothLeDevice> {
 
     private Holder mHolder;
     private Map<String, ConnectState> map;
+
     public DeviceStateAdapter(Context context) {
         super(context);
         map = new HashMap<>();
@@ -46,16 +47,17 @@ public class DeviceStateAdapter extends BaseArrayListAdapter<BluetoothLeDevice>{
 
     /**
      * 更新为选择状态
+     *
      * @param address
      */
-    public void updateState(String address, ConnectState state){
+    public void updateState(String address, ConnectState state) {
         map.put(address, state);
         notifyDataSetChanged();
     }
 
-    public void removeDevice(String address){
+    public void removeDevice(String address) {
         int pos = 0;
-        for (int i=0; i<getCount(); i++){
+        for (int i = 0; i < getCount(); i++) {
             BluetoothLeDevice entity = (BluetoothLeDevice) getItem(i);
             if (entity.getAddress().equals(address)) pos = i;
         }
@@ -63,8 +65,8 @@ public class DeviceStateAdapter extends BaseArrayListAdapter<BluetoothLeDevice>{
     }
 
     @Override
-    public void add(BluetoothLeDevice data){
-        if (!map.containsKey(data.getAddress())){
+    public void add(BluetoothLeDevice data) {
+        if (!map.containsKey(data.getAddress())) {
             getAllData().add(data);
             map.put(data.getAddress(), ConnectState.NORMAL);
             Collections.sort(getAllData(), comparator);
@@ -80,9 +82,9 @@ public class DeviceStateAdapter extends BaseArrayListAdapter<BluetoothLeDevice>{
 
     @Override
     public void addAll(List<BluetoothLeDevice> datas) {
-        if(datas != null && datas.size() > 0) {
-            for (BluetoothLeDevice entity : datas){
-                if (!map.containsKey(entity.getAddress())){
+        if (datas != null && datas.size() > 0) {
+            for (BluetoothLeDevice entity : datas) {
+                if (!map.containsKey(entity.getAddress())) {
                     map.put(entity.getAddress(), ConnectState.NORMAL);
                     getAllData().add(entity);
                 }
@@ -95,7 +97,7 @@ public class DeviceStateAdapter extends BaseArrayListAdapter<BluetoothLeDevice>{
     private Comparator<BluetoothLeDevice> comparator = new Comparator<BluetoothLeDevice>() {
         @Override
         public int compare(BluetoothLeDevice lhs, BluetoothLeDevice rhs) {
-            return rhs.getRssi()-lhs.getRssi();
+            return rhs.getRssi() - lhs.getRssi();
         }
     };
 
@@ -105,7 +107,7 @@ public class DeviceStateAdapter extends BaseArrayListAdapter<BluetoothLeDevice>{
             convertView = mInflater.inflate(R.layout.listitem_device_state, null);
             mHolder = new Holder(convertView);
             convertView.setTag(mHolder);
-        }else{
+        } else {
             mHolder = (Holder) convertView.getTag();
         }
 
@@ -115,28 +117,29 @@ public class DeviceStateAdapter extends BaseArrayListAdapter<BluetoothLeDevice>{
 
     private void setContent(int position, Holder mHolder) {
         BluetoothLeDevice entity = (BluetoothLeDevice) getItem(position);
-        if (entity != null){
+        if (entity != null) {
             String name = entity.getAdRecordStore().getLocalNameComplete();
-            if (name == null || name.length() == 0) name="Unknow Name";
+            if (name == null || name.length() == 0) name = "Unknow Name";
             mHolder.mTvName.setText(name);
             mHolder.mTvAddress.setText(entity.getAddress());
             ConnectState state = map.get(entity.getAddress());
             mHolder.mTvState.setTextColor(mContext.getResources().getColor(R.color.text_content));
-            if (state == ConnectState.NORMAL){
+            if (state == ConnectState.NORMAL) {
                 mHolder.mTvState.setText("Disconnect");
-            }else if(state == ConnectState.CONNECTING){
+            } else if (state == ConnectState.CONNECTING) {
                 mHolder.mTvState.setText("Connecting");
-            }else{
+            } else {
                 mHolder.mTvState.setText("Connected");
                 mHolder.mTvState.setTextColor(mContext.getResources().getColor(R.color.red));
             }
         }
     }
 
-    class Holder{
-        public Holder(View view){
+    class Holder {
+        public Holder(View view) {
             ButterKnife.bind(this, view);
         }
+
         @Bind(R.id.device_tv_text)
         TextView mTvName;
         @Bind(R.id.device_tv_mac)

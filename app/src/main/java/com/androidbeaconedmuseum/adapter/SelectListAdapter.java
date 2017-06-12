@@ -6,8 +6,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.blakequ.androidblemanager.R;
 import com.androidbeaconedmuseum.utils.BluetoothRssiLevel;
+import com.blakequ.androidblemanager.R;
 import com.blakequ.bluetooth_manager_lib.device.BluetoothLeDevice;
 
 import java.util.ArrayList;
@@ -41,21 +41,22 @@ public class SelectListAdapter extends BaseArrayListAdapter<BluetoothLeDevice> {
     private Holder mHolder;
     private Map<String, Boolean> map;
     private boolean isSingleSelect = true;
+
     public SelectListAdapter(Context context) {
         super(context);
         map = new HashMap<>();
     }
 
-    public void setSingleSelect(boolean isSingleSelect){
+    public void setSingleSelect(boolean isSingleSelect) {
         this.isSingleSelect = isSingleSelect;
     }
 
-    public List<BluetoothLeDevice> getSelectDevice(){
+    public List<BluetoothLeDevice> getSelectDevice() {
         List<BluetoothLeDevice> list = new ArrayList<>();
-        for (String mac:map.keySet()){
-            if (map.get(mac)){
+        for (String mac : map.keySet()) {
+            if (map.get(mac)) {
                 BluetoothLeDevice device = getDevice(mac);
-                if (device != null){
+                if (device != null) {
                     list.add(device);
                 }
             }
@@ -63,17 +64,17 @@ public class SelectListAdapter extends BaseArrayListAdapter<BluetoothLeDevice> {
         return list;
     }
 
-    private BluetoothLeDevice getDevice(String address){
-        for (BluetoothLeDevice entity : getAllData()){
-            if (entity.getAddress().equals(address)){
+    private BluetoothLeDevice getDevice(String address) {
+        for (BluetoothLeDevice entity : getAllData()) {
+            if (entity.getAddress().equals(address)) {
                 return entity;
             }
         }
         return null;
     }
 
-    public void cleanSelect(){
-        for (BluetoothLeDevice entity : getAllData()){
+    public void cleanSelect() {
+        for (BluetoothLeDevice entity : getAllData()) {
             map.put(entity.getAddress(), false);
         }
         notifyDataSetChanged();
@@ -81,11 +82,12 @@ public class SelectListAdapter extends BaseArrayListAdapter<BluetoothLeDevice> {
 
     /**
      * 更新为选择状态
+     *
      * @param address
      */
-    public void updateChecked(String address){
-        for (BluetoothLeDevice entity : getAllData()){
-            if (isSingleSelect){
+    public void updateChecked(String address) {
+        for (BluetoothLeDevice entity : getAllData()) {
+            if (isSingleSelect) {
                 map.put(entity.getAddress(), false);
             }
             if (entity.getAddress().equals(address)) {
@@ -104,9 +106,9 @@ public class SelectListAdapter extends BaseArrayListAdapter<BluetoothLeDevice> {
 
     @Override
     public void addAll(List<BluetoothLeDevice> datas) {
-        if(datas != null && datas.size() > 0) {
-            for (BluetoothLeDevice entity : datas){
-                if (!map.containsKey(entity.getAddress())){
+        if (datas != null && datas.size() > 0) {
+            for (BluetoothLeDevice entity : datas) {
+                if (!map.containsKey(entity.getAddress())) {
                     map.put(entity.getAddress(), false);
                     getAllData().add(entity);
                 }
@@ -129,7 +131,7 @@ public class SelectListAdapter extends BaseArrayListAdapter<BluetoothLeDevice> {
             convertView = mInflater.inflate(R.layout.listitem_select, null);
             mHolder = new Holder(convertView);
             convertView.setTag(mHolder);
-        }else{
+        } else {
             mHolder = (Holder) convertView.getTag();
         }
 
@@ -139,12 +141,12 @@ public class SelectListAdapter extends BaseArrayListAdapter<BluetoothLeDevice> {
 
     private void setContent(int position, Holder mHolder) {
         BluetoothLeDevice entity = (BluetoothLeDevice) getItem(position);
-        if (entity != null){
+        if (entity != null) {
             String name = entity.getAdRecordStore().getLocalNameComplete();
-            if (name == null || name.length() == 0) name="Unknow Name";
+            if (name == null || name.length() == 0) name = "Unknow Name";
             mHolder.mTvName.setText(name);
             mHolder.mIvFlag.setVisibility(View.INVISIBLE);
-            if (map.get(entity.getAddress())){
+            if (map.get(entity.getAddress())) {
                 mHolder.mIvFlag.setVisibility(View.VISIBLE);
             }
             mHolder.mTvAddress.setText(entity.getAddress());
@@ -152,10 +154,11 @@ public class SelectListAdapter extends BaseArrayListAdapter<BluetoothLeDevice> {
         }
     }
 
-    class Holder{
-        public Holder(View view){
+    class Holder {
+        public Holder(View view) {
             ButterKnife.bind(this, view);
         }
+
         @Bind(R.id.device_iv_check)
         ImageView mIvFlag;
         @Bind(R.id.device_tv_text)

@@ -9,9 +9,9 @@ import android.widget.SeekBar;
 import android.widget.Switch;
 import android.widget.TextView;
 
-import com.blakequ.androidblemanager.R;
 import com.androidbeaconedmuseum.utils.Constants;
 import com.androidbeaconedmuseum.utils.PreferencesUtils;
+import com.blakequ.androidblemanager.R;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -90,20 +90,20 @@ public class FilterActivity extends ToolbarActivity {
         });
     }
 
-    private void setCheck(boolean isChecked){
-        if (!isChecked){
+    private void setCheck(boolean isChecked) {
+        if (!isChecked) {
             mIvFlag.setVisibility(View.VISIBLE);
-        }else{
+        } else {
             mIvFlag.setVisibility(View.GONE);
             mEtName.clearFocus();
         }
     }
 
     @Override
-    protected void onPause(){
+    protected void onPause() {
         super.onPause();
         PreferencesUtils.putBoolean(this, Constants.FILTER_SWITCH, mSwitch.isChecked());
-        if (mSwitch.isChecked()){
+        if (mSwitch.isChecked()) {
             PreferencesUtils.putString(this, Constants.FILTER_NAME, mEtName.getText().toString().trim());
             PreferencesUtils.putInt(this, Constants.FILTER_RSSI, rssi);
         }

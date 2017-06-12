@@ -30,7 +30,7 @@ import com.blakequ.androidblemanager.R;
  * version : 1.0
  * description:
  */
-public abstract class ToolbarActivity extends AppCompatActivity{
+public abstract class ToolbarActivity extends AppCompatActivity {
     protected AppBarLayout mAppBar;
     protected Toolbar mToolbar;
     protected boolean mIsHidden = false;
@@ -38,11 +38,11 @@ public abstract class ToolbarActivity extends AppCompatActivity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (provideContentViewId() != 0){
+        if (provideContentViewId() != 0) {
             setContentView(provideContentViewId());
-        }else if (provideContentViewLayout() != null){
+        } else if (provideContentViewLayout() != null) {
             setContentView(provideContentViewLayout());
-        }else {
+        } else {
             throw new IllegalStateException("No main layout, you should set provideContentViewId or provideContentViewLayout");
         }
         mAppBar = (AppBarLayout) findViewById(R.id.toolbar_layout);
@@ -81,13 +81,14 @@ public abstract class ToolbarActivity extends AppCompatActivity{
         if (item.getItemId() == android.R.id.home) {
             onBackPressed();
             return true;
-        }else {
+        } else {
             return super.onOptionsItemSelected(item);
         }
     }
 
     /**
      * 设置AppBar透明度:0全透明，1不透明
+     *
      * @param alpha
      */
     protected void setAppBarAlpha(float alpha) {
@@ -96,7 +97,7 @@ public abstract class ToolbarActivity extends AppCompatActivity{
 
 
     /**
-     *显示或隐藏toolbar
+     * 显示或隐藏toolbar
      */
     protected void hideOrShowToolbar() {
         mAppBar.animate()
@@ -114,14 +115,17 @@ public abstract class ToolbarActivity extends AppCompatActivity{
         }
     }
 
-    /** 必须在这里面返回主界面布局id */
+    /**
+     * 必须在这里面返回主界面布局id
+     */
     public abstract int provideContentViewId();
 
     /**
      * 可以返回主界面布局视图
+     *
      * @return
      */
-    public View provideContentViewLayout(){
+    public View provideContentViewLayout() {
         return null;
     }
 }

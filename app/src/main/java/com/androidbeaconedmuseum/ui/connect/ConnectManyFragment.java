@@ -12,11 +12,11 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.blakequ.androidblemanager.R;
 import com.androidbeaconedmuseum.adapter.DeviceStateAdapter;
 import com.androidbeaconedmuseum.containers.BluetoothLeDeviceStore;
 import com.androidbeaconedmuseum.event.UpdateEvent;
 import com.androidbeaconedmuseum.ui.MainActivity;
+import com.blakequ.androidblemanager.R;
 import com.blakequ.bluetooth_manager_lib.connect.ConnectState;
 import com.blakequ.bluetooth_manager_lib.connect.ConnectStateListener;
 import com.blakequ.bluetooth_manager_lib.connect.multiple.MultiConnectManager;
@@ -49,7 +49,7 @@ import butterknife.ButterKnife;
  * version : 1.0 <br>
  * description:
  */
-public class ConnectManyFragment extends Fragment{
+public class ConnectManyFragment extends Fragment {
 
     private View rootView;
     private BleDeviceDialog dialog;
@@ -72,7 +72,7 @@ public class ConnectManyFragment extends Fragment{
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 BluetoothLeDevice device = (BluetoothLeDevice) mAdapter.getItem(position);
-                if (device != null){
+                if (device != null) {
                     multiConnectManager.startConnect(device.getAddress());
                 }
             }
@@ -81,12 +81,12 @@ public class ConnectManyFragment extends Fragment{
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long l) {
                 final BluetoothLeDevice device = (BluetoothLeDevice) mAdapter.getItem(position);
-                if (device != null){
-                    Snackbar.make(rootView, "Would you want remove device "+device.getAddress()+" ？", Snackbar.LENGTH_LONG)
+                if (device != null) {
+                    Snackbar.make(rootView, "Would you want remove device " + device.getAddress() + " ？", Snackbar.LENGTH_LONG)
                             .setAction("Remove", new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
-                                    Logger.d("remove device form queue "+device.getAddress());
+                                    Logger.d("remove device form queue " + device.getAddress());
                                     mAdapter.removeDevice(device.getAddress());
                                     multiConnectManager.removeDeviceFromQueue(device.getAddress());
                                 }
@@ -137,29 +137,29 @@ public class ConnectManyFragment extends Fragment{
         EventBus.getDefault().register(this);
     }
 
-    private void updateDeviceList(){
+    private void updateDeviceList() {
         List<BluetoothLeDevice> adapterlist = mAdapter.getAllData();
         List<String> tlist = multiConnectManager.getAllDevice();
         List<BluetoothLeDevice> newList = new ArrayList<>();
         newList.addAll(adapterlist);
 
-        for (BluetoothLeDevice device:newList){
+        for (BluetoothLeDevice device : newList) {
             String tmp = null;
-            for (String mac:tlist){
-                if (device.getAddress().equals(mac)){
+            for (String mac : tlist) {
+                if (device.getAddress().equals(mac)) {
                     tmp = mac;
                 }
             }
-            if (tmp == null){
+            if (tmp == null) {
                 mAdapter.removeDevice(device.getAddress());
             }
         }
     }
 
-    private String[] getDeviceList(List<BluetoothLeDevice> list){
+    private String[] getDeviceList(List<BluetoothLeDevice> list) {
         String[] array = new String[list.size()];
-        int i =0;
-        for (BluetoothLeDevice device:list){
+        int i = 0;
+        for (BluetoothLeDevice device : list) {
             array[i++] = device.getAddress();
         }
         return array;
@@ -189,7 +189,7 @@ public class ConnectManyFragment extends Fragment{
                                             activity.startScan();
                                         }
                                     }).show();
-                        }else {
+                        } else {
                             dialog.addDeviceList(store.getDeviceList());
                             dialog.showAtLocation(rootView, Gravity.BOTTOM, 0, 0);
                         }
@@ -198,7 +198,7 @@ public class ConnectManyFragment extends Fragment{
                 break;
             case TAB_SWITCH:
                 int tab = event.getArg1();
-                if (tab != 2){
+                if (tab != 2) {
                     multiConnectManager.release();
                     mAdapter.clear();
                 }

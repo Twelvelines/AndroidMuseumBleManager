@@ -6,12 +6,12 @@
     android:layout_height="match_parent"
     android:padding="8dp"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.androidbeaconedmuseum.ui.MainActivity"
+    tools:context=".ui.MainActivity"
     tools:showIn="@layout/app_bar_main">
 
-    <com.androidbeaconedmuseum.widget.ScrollViewPager
+    <com.blakequ.androidblemanager.widget.ScrollViewPager
         style="@style/Style_Scrollable"
         android:id="@+id/common_viewpager"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"/>
 </RelativeLayout>

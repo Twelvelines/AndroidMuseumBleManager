@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context="com.androidbeaconedmuseum.ui.MainActivity">
+    tools:context=".ui.MainActivity">
 
     <!--
     <android.support.design.widget.AppBarLayout
@@ -25,7 +25,7 @@
         app:srcCompat="@mipmap/location" />
 
 
-    <com.androidbeaconedmuseum.ui.scan.LocationView
+    <com.blakequ.androidblemanager.ui.scan.LocationView
         android:id="@+id/location_board"
         android:layout_width="match_parent"
         android:layout_gravity="center"

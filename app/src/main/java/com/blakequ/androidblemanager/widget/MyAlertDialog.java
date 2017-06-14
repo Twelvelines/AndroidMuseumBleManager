@@ -33,7 +33,7 @@ public class MyAlertDialog {
     /**
      * 打开设置界面
      */
-    public static AlertDialog showOpenSettingDialog(final Context context, @StringRes int messageResId){
+    public static AlertDialog showOpenSettingDialog(final Context context, @StringRes int messageResId) {
         AlertDialog dialog = new AlertDialog.Builder(context)
                 .setPositiveButton(R.string.open_setting, new DialogInterface.OnClickListener() {
                     @Override
@@ -56,6 +56,7 @@ public class MyAlertDialog {
 
     /**
      * 弹出请求提示框之前的提示框
+     *
      * @param messageResId
      * @param request
      */
@@ -81,6 +82,7 @@ public class MyAlertDialog {
 
     /**
      * 弹出对话框,两个按钮,显示需要调用show()
+     *
      * @param context
      * @param messageResId
      * @param postBtResId
@@ -89,7 +91,7 @@ public class MyAlertDialog {
      * @param negaListener
      */
     public static AlertDialog getDialog(final Context context, @StringRes int messageResId, @StringRes int postBtResId, @StringRes int negaBtResId
-        ,DialogInterface.OnClickListener postListener, DialogInterface.OnClickListener negaListener) {
+            , DialogInterface.OnClickListener postListener, DialogInterface.OnClickListener negaListener) {
         AlertDialog dialog = new AlertDialog.Builder(context)
                 .setPositiveButton(postBtResId, postListener)
                 .setNegativeButton(negaBtResId, negaListener)
@@ -101,18 +103,19 @@ public class MyAlertDialog {
 
     /**
      * 三个按钮的dialog
+     *
      * @param context
      * @param messageResId
-     * @param postBtResId 最右边按钮文字
-     * @param neutralBtResId 中间按钮文字
-     * @param negaBtResId 最左边按钮文字
-     * @param postListener 右边按钮监听器
+     * @param postBtResId     最右边按钮文字
+     * @param neutralBtResId  中间按钮文字
+     * @param negaBtResId     最左边按钮文字
+     * @param postListener    右边按钮监听器
      * @param neutralListener 中间按钮监听器
-     * @param negaListener 左边按钮监听器
+     * @param negaListener    左边按钮监听器
      * @return
      */
     public static AlertDialog getDialog(final Context context, @StringRes int messageResId, @StringRes int postBtResId, @StringRes int neutralBtResId, @StringRes int negaBtResId
-            ,DialogInterface.OnClickListener postListener, DialogInterface.OnClickListener neutralListener, DialogInterface.OnClickListener negaListener) {
+            , DialogInterface.OnClickListener postListener, DialogInterface.OnClickListener neutralListener, DialogInterface.OnClickListener negaListener) {
         AlertDialog dialog = new AlertDialog.Builder(context)
                 .setPositiveButton(postBtResId, postListener)
                 .setNeutralButton(neutralBtResId, negaListener)
@@ -125,18 +128,20 @@ public class MyAlertDialog {
 
     /**
      * 单个按钮,显示需要调用show()
+     *
      * @param context
      * @param messageResId
      * @param postBtResId
      * @param postListener
      */
     public static AlertDialog getDialog(final Context context, @StringRes int messageResId, @StringRes int postBtResId
-            , DialogInterface.OnClickListener postListener){
+            , DialogInterface.OnClickListener postListener) {
         return getDialog(context, messageResId, postBtResId, postListener, true);
     }
 
     /**
      * 单个按钮,显示需要调用show()
+     *
      * @param context
      * @param messageResId
      * @param postBtResId
@@ -154,17 +159,18 @@ public class MyAlertDialog {
 
     /**
      * 自定义dialog
+     *
      * @param context
      * @param view
      * @param postBtResId
      * @param negaBtResId
      * @param postListener
      * @param negaListener
-     * @param isCancel 是否点击外部可消失
+     * @param isCancel     是否点击外部可消失
      * @return
      */
     public static AlertDialog getViewDialog(final Context context, View view, @StringRes int postBtResId, @StringRes int negaBtResId
-            , DialogInterface.OnClickListener postListener, DialogInterface.OnClickListener negaListener, boolean isCancel){
+            , DialogInterface.OnClickListener postListener, DialogInterface.OnClickListener negaListener, boolean isCancel) {
         AlertDialog dialog = new AlertDialog.Builder(context)
                 .setCancelable(isCancel)
                 .setPositiveButton(postBtResId, postListener)

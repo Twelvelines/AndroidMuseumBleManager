@@ -9,14 +9,14 @@ import java.util.regex.PatternSyntaxException;
 
 /**
  * String Utils
- * 
+ *
  * @author <a href="http://www.trinea.cn" target="_blank">Trinea</a> 2011-7-22
  */
 public class StringUtils {
 
     /**
      * is null or its length is 0 or it is made by space
-     * 
+     * <p>
      * <pre>
      * isBlank(null) = true;
      * isBlank(&quot;&quot;) = true;
@@ -26,7 +26,7 @@ public class StringUtils {
      * isBlank(&quot; a&quot;) = false;
      * isBlank(&quot;a b&quot;) = false;
      * </pre>
-     * 
+     *
      * @param str
      * @return if string is null or its size is 0 or it is made by space, return true, else return false.
      */
@@ -36,13 +36,13 @@ public class StringUtils {
 
     /**
      * is null or its length is 0
-     * 
+     * <p>
      * <pre>
      * isEmpty(null) = true;
      * isEmpty(&quot;&quot;) = true;
      * isEmpty(&quot;  &quot;) = false;
      * </pre>
-     * 
+     *
      * @param str
      * @return if string is null or its size is 0, return true, else return false.
      */
@@ -53,7 +53,7 @@ public class StringUtils {
 
     /**
      * 字符串转整数
-     * 
+     *
      * @param str
      * @param defValue
      * @return
@@ -68,7 +68,7 @@ public class StringUtils {
 
     /**
      * 对象转整
-     * 
+     *
      * @param obj
      * @return 转换异常返回 0
      */
@@ -80,7 +80,7 @@ public class StringUtils {
 
     /**
      * String转long
-     * 
+     *
      * @param obj
      * @return 转换异常返回 0
      */
@@ -94,7 +94,7 @@ public class StringUtils {
 
     /**
      * String转double
-     * 
+     *
      * @param obj
      * @return 转换异常返回 0
      */
@@ -108,7 +108,7 @@ public class StringUtils {
 
     /**
      * 字符串转布尔
-     * 
+     *
      * @param b
      * @return 转换异常返回 false
      */
@@ -134,9 +134,8 @@ public class StringUtils {
 
     /**
      * byte[]数组转换为16进制的字符串。
-     * 
-     * @param data
-     *            要转换的字节数组。
+     *
+     * @param data 要转换的字节数组。
      * @return 转换后的结果。
      */
     public static final String byteArrayToHexString(byte[] data) {
@@ -153,9 +152,8 @@ public class StringUtils {
 
     /**
      * 16进制表示的字符串转换为字节数组。
-     * 
-     * @param s
-     *            16进制表示的字符串
+     *
+     * @param s 16进制表示的字符串
      * @return byte[] 字节数组
      */
     public static byte[] hexStringToByteArray(String s) {
@@ -171,13 +169,13 @@ public class StringUtils {
 
     /**
      * null string to empty string
-     * 
+     * <p>
      * <pre>
      * nullStrToEmpty(null) = &quot;&quot;;
      * nullStrToEmpty(&quot;&quot;) = &quot;&quot;;
      * nullStrToEmpty(&quot;aa&quot;) = &quot;aa&quot;;
      * </pre>
-     * 
+     *
      * @param str
      * @return
      */
@@ -187,7 +185,7 @@ public class StringUtils {
 
     /**
      * capitalize first letter
-     * 
+     * <p>
      * <pre>
      * capitalizeFirstLetter(null)     =   null;
      * capitalizeFirstLetter("")       =   "";
@@ -196,7 +194,7 @@ public class StringUtils {
      * capitalizeFirstLetter("ab")     =   "Ab"
      * capitalizeFirstLetter("Abc")    =   "Abc"
      * </pre>
-     * 
+     *
      * @param str
      * @return
      */
@@ -212,14 +210,14 @@ public class StringUtils {
 
     /**
      * encoded in utf-8
-     * 
+     * <p>
      * <pre>
      * utf8Encode(null)        =   null
      * utf8Encode("")          =   "";
      * utf8Encode("aa")        =   "aa";
      * utf8Encode("啊啊啊啊")   = "%E5%95%8A%E5%95%8A%E5%95%8A%E5%95%8A";
      * </pre>
-     * 
+     *
      * @param str
      * @return
      * @throws UnsupportedEncodingException if an error occurs
@@ -237,7 +235,7 @@ public class StringUtils {
 
     /**
      * encoded in utf-8, if exception, return defultReturn
-     * 
+     *
      * @param str
      * @param defultReturn
      * @return
@@ -255,7 +253,7 @@ public class StringUtils {
 
     /**
      * get innerHtml from href
-     * 
+     * <p>
      * <pre>
      * getHrefInnerHtml(null)                                  = ""
      * getHrefInnerHtml("")                                    = ""
@@ -270,13 +268,13 @@ public class StringUtils {
      * getHrefInnerHtml("jack&lt;a&gt;innerHtml&lt;/a&gt;&lt;/a&gt;")                  = "innerHtml";
      * getHrefInnerHtml("&lt;a&gt;innerHtml1&lt;/a&gt;&lt;a&gt;innerHtml2&lt;/a&gt;")        = "innerHtml2";
      * </pre>
-     * 
+     *
      * @param href
      * @return <ul>
-     *         <li>if href is null, return ""</li>
-     *         <li>if not match regx, return source</li>
-     *         <li>return the last string that match regx</li>
-     *         </ul>
+     * <li>if href is null, return ""</li>
+     * <li>if not match regx, return source</li>
+     * <li>return the last string that match regx</li>
+     * </ul>
      */
     public static String getHrefInnerHtml(String href) {
         if (isEmpty(href)) {
@@ -292,9 +290,9 @@ public class StringUtils {
         return href;
     }
 
-/**
+    /**
      * process special char in html
-     * 
+     * <p>
      * <pre>
      * htmlEscapeCharsToString(null) = null;
      * htmlEscapeCharsToString("") = "";
@@ -305,7 +303,7 @@ public class StringUtils {
      * htmlEscapeCharsToString("mp3&quot;mp4") = "mp3\"mp4";
      * htmlEscapeCharsToString("mp3&lt;&gt;&amp;&quot;mp4") = "mp3\<\>&\"mp4";
      * </pre>
-     * 
+     *
      * @param source
      * @return
      */
@@ -316,14 +314,14 @@ public class StringUtils {
 
     /**
      * transform half width char to full width char
-     * 
+     * <p>
      * <pre>
      * fullWidthToHalfWidth(null) = null;
      * fullWidthToHalfWidth("") = "";
      * fullWidthToHalfWidth(new String(new char[] {12288})) = " ";
      * fullWidthToHalfWidth("！＂＃＄％＆) = "!\"#$%&";
      * </pre>
-     * 
+     *
      * @param s
      * @return
      */
@@ -339,7 +337,7 @@ public class StringUtils {
                 // } else if (source[i] == 12290) {
                 // source[i] = '.';
             } else if (source[i] >= 65281 && source[i] <= 65374) {
-                source[i] = (char)(source[i] - 65248);
+                source[i] = (char) (source[i] - 65248);
             } else {
                 source[i] = source[i];
             }
@@ -349,14 +347,14 @@ public class StringUtils {
 
     /**
      * transform full width char to half width char
-     * 
+     * <p>
      * <pre>
      * halfWidthToFullWidth(null) = null;
      * halfWidthToFullWidth("") = "";
      * halfWidthToFullWidth(" ") = new String(new char[] {12288});
      * halfWidthToFullWidth("!\"#$%&) = "！＂＃＄％＆";
      * </pre>
-     * 
+     *
      * @param s
      * @return
      */
@@ -368,42 +366,44 @@ public class StringUtils {
         char[] source = s.toCharArray();
         for (int i = 0; i < source.length; i++) {
             if (source[i] == ' ') {
-                source[i] = (char)12288;
+                source[i] = (char) 12288;
                 // } else if (source[i] == '.') {
                 // source[i] = (char)12290;
             } else if (source[i] >= 33 && source[i] <= 126) {
-                source[i] = (char)(source[i] + 65248);
+                source[i] = (char) (source[i] + 65248);
             } else {
                 source[i] = source[i];
             }
         }
         return new String(source);
     }
-    
+
     /**
-	 * 过滤特殊字符<p>
-	 * [`~!@$%^&*()+=|{}':;',\\[\\].<>/?~！@￥%……&*（）——+|{}【】‘；：”“’。，、？\\s*|\t|\r|\n]
-	 * <p>Title: StringFilter
-	 * <p>Description: 
-	 * @param str
-	 * @return
-	 * @throws PatternSyntaxException
-	 */
-	public static String stringFilter(String str) throws PatternSyntaxException {
-		String tmp;
-		// 只允许字母和数字
-		// String regEx = "[^a-zA-Z0-9]";
-		// 清除掉所有特殊字符
-		//空格、回车、换行符、制表符\\s*|\t|\r|\n
-		String regEx = "[`~!@$%^&*()+=|{}':;',\\[\\].<>/?~！@￥%……&*（）——+|{}【】‘；：”“’。，、？\\s*|\t|\r|\n]";
-		Pattern p = Pattern.compile(regEx);
-		Matcher m = p.matcher(str);
-		tmp = m.replaceAll("").trim();
-		return tmp;
-	}
+     * 过滤特殊字符<p>
+     * [`~!@$%^&*()+=|{}':;',\\[\\].<>/?~！@￥%……&*（）——+|{}【】‘；：”“’。，、？\\s*|\t|\r|\n]
+     * <p>Title: StringFilter
+     * <p>Description:
+     *
+     * @param str
+     * @return
+     * @throws PatternSyntaxException
+     */
+    public static String stringFilter(String str) throws PatternSyntaxException {
+        String tmp;
+        // 只允许字母和数字
+        // String regEx = "[^a-zA-Z0-9]";
+        // 清除掉所有特殊字符
+        //空格、回车、换行符、制表符\\s*|\t|\r|\n
+        String regEx = "[`~!@$%^&*()+=|{}':;',\\[\\].<>/?~！@￥%……&*（）——+|{}【】‘；：”“’。，、？\\s*|\t|\r|\n]";
+        Pattern p = Pattern.compile(regEx);
+        Matcher m = p.matcher(str);
+        tmp = m.replaceAll("").trim();
+        return tmp;
+    }
 
     /**
      * Returns true if the string is null or 0-length.
+     *
      * @param str the string to be examined
      * @return true if str is null or zero length
      */
@@ -439,6 +439,7 @@ public class StringUtils {
      * Returns true if a and b are equal, including if they are both null.
      * <p><i>Note: In platform versions 1.1 and earlier, this method only worked well if
      * both the arguments were instances of String.</i></p>
+     *
      * @param a first CharSequence to check
      * @param b second CharSequence to check
      * @return true if a and b are equal
@@ -461,6 +462,7 @@ public class StringUtils {
 
     /**
      * 处理空字符串, 去除str字符串的空格，null
+     *
      * @param str
      * @return String
      */
@@ -470,6 +472,7 @@ public class StringUtils {
 
     /**
      * 处理空字符串, 去除str字符串的空格，null
+     *
      * @param str
      * @param defaultValue 如果为空，默认返回字符串
      * @return String

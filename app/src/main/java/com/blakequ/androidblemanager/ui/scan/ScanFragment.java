@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.androidbeaconedmuseum.LocationView;
 import com.blakequ.androidblemanager.R;
 import com.blakequ.androidblemanager.adapter.DeviceListAdapter;
 import com.blakequ.androidblemanager.containers.BluetoothLeDeviceStore;
@@ -18,10 +19,10 @@ import com.blakequ.bluetooth_manager_lib.device.BeaconType;
 import com.blakequ.bluetooth_manager_lib.device.BeaconUtils;
 import com.blakequ.bluetooth_manager_lib.device.BluetoothLeDevice;
 import com.blakequ.bluetooth_manager_lib.device.ibeacon.IBeaconDevice;
-import com.toy.example.BeaconDeviceLocation;
-import com.toy.example.BeaconDeviceLocationData;
-import com.toy.example.BeaconUnrecognisedException;
-import com.toy.example.UserLocation;
+import com.androidbeaconedmuseum.BeaconDeviceLocation;
+import com.androidbeaconedmuseum.BeaconDeviceLocationData;
+import com.androidbeaconedmuseum.BeaconUnrecognisedException;
+import com.androidbeaconedmuseum.UserLocation;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -120,8 +121,8 @@ public class ScanFragment extends Fragment {
             locationView.setDeviceLocations(locations);
             locationView.invalidate();
             locationText.setText("User location:\n" +
-                            "Latitude: " + UserLocation.getLatitude() + "\n" +
-                            "Longitude: " + UserLocation.getLongitude() + "\n");
+                    "Latitude: " + UserLocation.getLatitude() + "\n" +
+                    "Longitude: " + UserLocation.getLongitude() + "\n");
         }
     }
 

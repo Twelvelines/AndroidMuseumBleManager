@@ -21,12 +21,11 @@ import android.content.Context;
 import android.util.DisplayMetrics;
 
 /**
- * 
+ * @author qh@plusub.com
+ * @version v1.0
  * @ClassName: DensityUtils
  * @Description: TODO 系统屏幕的一些操作
- * @author qh@plusub.com
  * @date 2014-12-1 下午10:03:05
- * @version v1.0
  */
 public final class DensityUtils {
 
@@ -91,17 +90,18 @@ public final class DensityUtils {
         int h = dm.heightPixels;
         return h;
     }
-    
+
     /**
      * 获取屏幕属性
      * <p>Title: getScreenD
-     * <p>Description: 
+     * <p>Description:
+     *
      * @param aty
      * @return
      */
-    public static DisplayMetrics getScreenD(Activity aty){
-    	DisplayMetrics dm = new DisplayMetrics();
-    	aty.getWindowManager().getDefaultDisplay().getMetrics(dm);
-    	return dm;
+    public static DisplayMetrics getScreenD(Activity aty) {
+        DisplayMetrics dm = new DisplayMetrics();
+        aty.getWindowManager().getDefaultDisplay().getMetrics(dm);
+        return dm;
     }
 }

@@ -29,7 +29,7 @@ import com.blakequ.bluetooth_manager_lib.device.ibeacon.IBeaconDevice;
  * version : 1.0 <br>
  * description:
  */
-public class DeviceListAdapter extends BaseArrayListAdapter<BluetoothLeDevice>{
+public class DeviceListAdapter extends BaseArrayListAdapter<BluetoothLeDevice> {
 
     public DeviceListAdapter(Context context) {
         super(context);

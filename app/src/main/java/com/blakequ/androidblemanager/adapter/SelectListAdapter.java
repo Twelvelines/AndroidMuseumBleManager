@@ -6,13 +6,12 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-<<<<<<< HEAD:app/src/main/java/com/androidbeaconedmuseum/adapter/SelectListAdapter.java
-import com.androidbeaconedmuseum.utils.BluetoothRssiLevel;
+
+import com.blakequ.androidblemanager.utils.BluetoothRssiLevel;
 import com.blakequ.androidblemanager.R;
-=======
 import com.blakequ.androidblemanager.R;
 import com.blakequ.androidblemanager.utils.BluetoothRssiLevel;
->>>>>>> parent of c426b27... map graphic tenth commit::app/src/main/java/com/blakequ/androidblemanager/adapter/SelectListAdapter.java
+
 import com.blakequ.bluetooth_manager_lib.device.BluetoothLeDevice;
 
 import java.util.ArrayList;

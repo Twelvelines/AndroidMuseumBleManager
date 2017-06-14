@@ -25,7 +25,7 @@
         app:srcCompat="@mipmap/location" />
 
 
-    <com.blakequ.androidblemanager.ui.scan.LocationView
+    <com.androidbeaconedmuseum.LocationView
         android:id="@+id/location_board"
         android:layout_width="match_parent"
         android:layout_gravity="center"

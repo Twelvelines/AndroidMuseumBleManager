@@ -1,4 +1,4 @@
-package com.blakequ.androidblemanager.ui.scan;
+package com.androidbeaconedmuseum;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -7,8 +7,8 @@ import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.view.View;
 
-import com.toy.example.BeaconDeviceLocation;
-import com.toy.example.UserLocation;
+import com.androidbeaconedmuseum.BeaconDeviceLocation;
+import com.androidbeaconedmuseum.UserLocation;
 
 import java.util.ArrayList;
 import java.util.List;

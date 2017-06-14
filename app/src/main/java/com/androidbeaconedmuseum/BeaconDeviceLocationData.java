@@ -1,4 +1,4 @@
-package com.toy.example;
+package com.androidbeaconedmuseum;
 
 import com.blakequ.bluetooth_manager_lib.device.ibeacon.IBeaconDevice;
 

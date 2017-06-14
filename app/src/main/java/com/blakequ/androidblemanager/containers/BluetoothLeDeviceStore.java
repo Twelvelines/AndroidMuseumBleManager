@@ -67,7 +67,7 @@ public class BluetoothLeDeviceStore {
         return methodResult;
     }
 
-    public int size(){
+    public int size() {
         return mDeviceMap.size();
     }
 

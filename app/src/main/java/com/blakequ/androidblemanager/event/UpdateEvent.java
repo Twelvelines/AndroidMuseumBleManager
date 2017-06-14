@@ -75,7 +75,7 @@ public class UpdateEvent {
         this.obj = obj;
     }
 
-    public static enum Type{
+    public static enum Type {
         SCAN_UPDATE,
         BLE_DATA,
         POP_SHOW,

@@ -27,7 +27,7 @@ import com.blakequ.bluetooth_manager_lib.util.ByteUtils;
  * version : 1.0 <br>
  * description:
  */
-public class DescListAdapter extends BaseArrayListAdapter<BluetoothGattDescriptor>{
+public class DescListAdapter extends BaseArrayListAdapter<BluetoothGattDescriptor> {
 
     public DescListAdapter(Context context) {
         super(context);
@@ -48,12 +48,12 @@ public class DescListAdapter extends BaseArrayListAdapter<BluetoothGattDescripto
         }
 
         BluetoothGattDescriptor desc = (BluetoothGattDescriptor) getItem(position);
-        viewHolder.descUuid.setText("uuid: "+desc.getUuid().toString().substring(4,8));
-        if (desc.getValue() != null && desc.getValue().length > 0){
-            viewHolder.descValue.setText("Name:"+ GattAttributeResolver.getAttributeName(desc.getUuid().toString(), mContext.getString(R.string.unknown))
-                    +"\n"+"Value:"+ ByteUtils.byteArrayToHexString(desc.getValue()));
-        }else{
-            viewHolder.descValue.setText("Name:"+GattAttributeResolver.getAttributeName(desc.getUuid().toString(), mContext.getString(R.string.unknown)));
+        viewHolder.descUuid.setText("uuid: " + desc.getUuid().toString().substring(4, 8));
+        if (desc.getValue() != null && desc.getValue().length > 0) {
+            viewHolder.descValue.setText("Name:" + GattAttributeResolver.getAttributeName(desc.getUuid().toString(), mContext.getString(R.string.unknown))
+                    + "\n" + "Value:" + ByteUtils.byteArrayToHexString(desc.getValue()));
+        } else {
+            viewHolder.descValue.setText("Name:" + GattAttributeResolver.getAttributeName(desc.getUuid().toString(), mContext.getString(R.string.unknown)));
         }
         return view;
     }

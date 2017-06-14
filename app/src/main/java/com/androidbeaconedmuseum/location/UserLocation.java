@@ -31,23 +31,12 @@ public class UserLocation {
             double x_3 = BeaconDeviceLocationData.getLocation(selected.get(2)).getLatitude();
             double y_3 = BeaconDeviceLocationData.getLocation(selected.get(2)).getLongitude();
             // algorithm part
-            double k_1 = 2 * (x_2 - x_1);
-            double k_2 = 2 * (y_2 - y_1);
-            double b_1 = Math.pow(d_1, 2) - Math.pow(d_2, 2) + Math.pow(x_2, 2) - Math.pow(x_1, 2) + Math.pow(y_2, 2) - Math.pow(y_1, 2);
-            double k_3 = 2 * (x_3 - x_1);
-            double k_4 = 2 * (y_3 - y_1);
-            double b_2 = Math.pow(d_1, 2) - Math.pow(d_3, 2) + Math.pow(x_3, 2) - Math.pow(x_1, 2) + Math.pow(y_3, 2) - Math.pow(y_1, 2);
-            double x, y;
-            if (k_2 == 0) {
-                x = b_1 / k_1;
-                y = (b_2 - k_3 * x) / k_4;
-            } else if (k_4 == 0) {
-                x = b_2 / k_3;
-                y = (b_1 - k_1 * x) / k_2;
-            } else {
-                x = (k_2 * b_2 - k_4 * b_1) / (k_3 * k_2 - k_4 * k_1);
-                y = (b_1 - k_1 * x) / k_2;
-            }
+            double k_1 = -1 * (x_2 - x_1) / (y_2 - y_1);
+            double k_2 = -1 * (x_3 - x_2) / (y_3 - y_2);
+            double b_1 = (Math.pow(x_2, 2) - Math.pow(x_1, 2) + Math.pow(d_1, 2) - Math.pow(d_2, 2)) / (2 * (y_2 - y_1)) + (y_1 + y_2) / 2;
+            double b_2 = (Math.pow(x_3, 2) - Math.pow(x_2, 2) + Math.pow(d_2, 2) - Math.pow(d_3, 2)) / (2 * (y_3 - y_2)) + (y_2 + y_3) / 2;
+            double x = (b_2 - b_1) / (k_1 - k_2);
+            double y = k_1 * (b_2 - b_1) / (k_1 - k_2) + b_1;
 
             latitude = x;
             longitude = y;

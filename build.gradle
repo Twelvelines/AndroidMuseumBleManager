@@ -65,20 +65,13 @@ buildscript {
             url "https://plugins.gradle.org/m2/"
         }
 
-        //添加fir maven源
-        maven {
-            url "http://maven.bughd.com/public"
-        }
     }
     dependencies {
        // compile 'com.blakequ.androidblemanager:bluetooth-manager-lib:2.1.4'
-        classpath 'com.android.tools.build:gradle:2.3.2'
+        classpath 'com.android.tools.build:gradle:2.3.3'
         classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
-
-        //添加fir插件依赖
-        classpath 'im.fir:gradle-fir-publisher:1.0.7'
 
         //using for upload to bintray lib
         File file = project.rootProject.file('local.properties')

@@ -117,14 +117,8 @@ public class ScanFragment extends Fragment {
     }
 
     private void updateMapping(List<BluetoothLeDevice> deviceList) {
-        List<IBeaconDevice> beaconList = filterDevices(deviceList);
         List<BeaconDeviceLocation> locations = new ArrayList<>();
-        for (IBeaconDevice aBeacon : beaconList) {
-            try {
-                locations.add(BeaconDeviceLocationData.getLocation(aBeacon));
-            } catch (BeaconUnrecognisedException bue) {
-            }
-        }
+        List<IBeaconDevice> beaconList = filterDevices(deviceList, locations);
         if (locations.size() > 2) {
             // updating location mapping
             UserLocation.locate(beaconList);
@@ -133,25 +127,27 @@ public class ScanFragment extends Fragment {
             locationText.setText("User location:\n" +
                     "Latitude: " + UserLocation.getLatitude() + "\n" +
                     "Longitude: " + UserLocation.getLongitude() + "\n");
-        }
-        for (IBeaconDevice aBeacon : beaconList) {
-            if (aBeacon.getAccuracy() < 1.5) {
-                examineArtwork(aBeacon.getAddress());
+            for (IBeaconDevice aBeacon : beaconList) {
+                if (aBeacon.getAccuracy() < 1.5) {
+                    examineArtwork(aBeacon.getAddress());
+                }
             }
         }
     }
 
-    private List<IBeaconDevice> filterDevices(List<BluetoothLeDevice> bleDevices) {
-        List<IBeaconDevice> iBeacons = new ArrayList<>();
+    private List<IBeaconDevice> filterDevices(List<BluetoothLeDevice> bleDevices, List<BeaconDeviceLocation> locationRecords) {
+        List<IBeaconDevice> filtered = new ArrayList<>();
         for (final BluetoothLeDevice device : bleDevices) {
-            if (
-                    BeaconUtils.getBeaconType(device) == BeaconType.IBEACON &&
-                    BeaconDeviceLocationData.isRecognisedBeacon(device.getIBeaconDevice())
-                    ) {
-                iBeacons.add(device.getIBeaconDevice());
+            if (BeaconUtils.getBeaconType(device) == BeaconType.IBEACON &&
+                    device.getIBeaconDevice().getAccuracy() < 8) {
+                try {
+                    locationRecords.add(BeaconDeviceLocationData.getLocation(device.getIBeaconDevice()));
+                    filtered.add(device.getIBeaconDevice());
+                } catch (BeaconUnrecognisedException bue) {
+                }
             }
         }
-        return iBeacons;
+        return filtered;
     }
 
     private void examineArtwork(String beaconMacAddr) {

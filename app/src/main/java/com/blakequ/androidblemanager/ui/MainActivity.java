@@ -77,8 +77,6 @@ public class MainActivity extends ToolbarActivity
 
     @Bind(R.id.common_viewpager)
     protected ScrollViewPager mViewPager;
-    @Bind(R.id.fab)
-    protected FloatingActionButton fab;
 
     private List<Fragment> fragments;
     private FragmentPageAdapter mAdapter;
@@ -111,16 +109,6 @@ public class MainActivity extends ToolbarActivity
                 .setReconnectStrategy(ConnectConfig.RECONNECT_FIXED_TIME)
                 .setReconnectedLineToExponentTimes(5)
                 .build());
-
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-                EventBus.getDefault().post(new UpdateEvent(UpdateEvent.Type.POP_SHOW, currentTab));
-            }
-        });
-        fab.setVisibility(View.GONE);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -196,19 +184,6 @@ public class MainActivity extends ToolbarActivity
             @Override
             public void onScanFailed(final int errorCode) {
                 super.onScanFailed(errorCode);
-                Snackbar.make(fab, "Fail to scan device! error code:" + errorCode, Snackbar.LENGTH_LONG)
-                        .setAction("Detail", new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                if (errorCode == SCAN_FAILED_LOCATION_CLOSE) {
-                                    Toast.makeText(MainActivity.this, "Location is closed, you should open first", Toast.LENGTH_LONG).show();
-                                } else if (errorCode == SCAN_FAILED_LOCATION_PERMISSION_FORBID) {
-                                    Toast.makeText(MainActivity.this, "You have not permission of location", Toast.LENGTH_LONG).show();
-                                } else {
-                                    Toast.makeText(MainActivity.this, "Other exception", Toast.LENGTH_LONG).show();
-                                }
-                            }
-                        }).show();
             }
 
             @Override
@@ -372,11 +347,6 @@ public class MainActivity extends ToolbarActivity
         public void onPageSelected(int position) {
             currentTab = position;
             EventBus.getDefault().post(new UpdateEvent(UpdateEvent.Type.TAB_SWITCH, position));
-            if (position == 0) {
-                fab.setVisibility(View.GONE);
-            } else {
-                fab.setVisibility(View.VISIBLE);
-            }
             invalidateOptionsMenu();
         }
 

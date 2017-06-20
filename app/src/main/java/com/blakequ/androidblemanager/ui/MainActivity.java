@@ -174,41 +174,6 @@ public class MainActivity extends ToolbarActivity
         return mDeviceStore;
     }
 
-    /*private void updateFirAppUpdate(){
-        new FirCheckUtils(this).startCheckVersion(BuildConfig.FIR_ID, BuildConfig.FIR_TOKEN, new FirCheckUtils.OnVersionDownloadListener() {
-            @Override
-            public void onNewVersionGet(final FirCheckUtils.FirVersionBean versionBean) {
-                if (versionBean != null && versionBean.isUpdate()) {
-                    AlertDialog dialog = new AlertDialog.Builder(MainActivity.this)
-                            .setPositiveButton(getString(R.string.confirm), new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    dialog.dismiss();
-                                    if (checkPermission()){
-                                        Intent intent = new Intent(getApplicationContext(), AppUpgradeService.class);
-                                        intent.putExtra(AppUpgradeService.EXTRA_DOWLOAD_URL, versionBean.getInstallUrl());
-                                        startService(intent);
-                                    }
-                                }
-                            })
-                            .setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    dialog.dismiss();
-                                }
-                            })
-                            .setCancelable(true)
-                            .setTitle("软件更新")
-                            .setMessage("检测到测试版有更新:" + versionBean.getChangeLog() + "，是否立即更新？")
-                            .create();
-                    dialog.show();
-                }
-            }
-        });
-    }
-
-*/
-
     private void initScan() {
         mBluetoothUtils = new BluetoothUtils(this);
         mDeviceStore = new BluetoothLeDeviceStore();
@@ -326,8 +291,6 @@ public class MainActivity extends ToolbarActivity
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
         if (currentTab == 0) {
-            menu.findItem(R.id.menu_connect).setVisible(false);
-            menu.findItem(R.id.menu_disconnect).setVisible(false);
             if (!scanManager.isScanning()) {
                 menu.findItem(R.id.menu_stop).setVisible(false);
                 menu.findItem(R.id.menu_scan).setVisible(true);
@@ -344,14 +307,10 @@ public class MainActivity extends ToolbarActivity
             menu.findItem(R.id.menu_scan).setVisible(false);
             menu.findItem(R.id.menu_filter).setVisible(false);
             menu.findItem(R.id.menu_refresh).setActionView(null);
-            menu.findItem(R.id.menu_connect).setVisible(false);
-            menu.findItem(R.id.menu_disconnect).setVisible(false);
             int size = BluetoothConnectManager.getInstance(this).getConnectedDevice().size();
             if (size > 0) {
                 if (BluetoothConnectManager.getInstance(this).getCurrentState() == ConnectState.CONNECTING) {
                     menu.findItem(R.id.menu_refresh).setActionView(R.layout.actionbar_progress_indeterminate);
-                } else {
-                    menu.findItem(R.id.menu_disconnect).setVisible(true);
                 }
             }
         } else {
@@ -359,13 +318,8 @@ public class MainActivity extends ToolbarActivity
             menu.findItem(R.id.menu_scan).setVisible(false);
             menu.findItem(R.id.menu_filter).setVisible(false);
             menu.findItem(R.id.menu_refresh).setActionView(null);
-            menu.findItem(R.id.menu_connect).setVisible(false);
-            menu.findItem(R.id.menu_disconnect).setVisible(false);
             if (MultiConnectManager.getInstance(this).isConnectingDevice()) {
                 menu.findItem(R.id.menu_refresh).setActionView(R.layout.actionbar_progress_indeterminate);
-                menu.findItem(R.id.menu_disconnect).setVisible(true);
-            } else {
-                menu.findItem(R.id.menu_connect).setVisible(true);
             }
         }
         return true;
@@ -383,29 +337,8 @@ public class MainActivity extends ToolbarActivity
             case R.id.menu_stop:
                 scanManager.stopCycleScan();
                 break;
-            case R.id.menu_share:
-                mDeviceStore.shareDataAsEmail(this);
-                break;
             case R.id.menu_filter:
                 startActivity(new Intent(this, FilterActivity.class));
-                break;
-            case R.id.menu_connect:
-                if (mDeviceStore.size() == 0) {
-                    Snackbar.make(fab, "Not bluetooth device, please scan device first", Snackbar.LENGTH_LONG)
-                            .setAction("Scan Now", new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-                                    mViewPager.setCurrentItem(0, false);
-                                    startScan();
-                                }
-                            }).show();
-                } else {
-                    MultiConnectManager.getInstance(this).startConnect();
-                }
-                break;
-            case R.id.menu_disconnect:
-                BluetoothConnectManager.getInstance(this).closeAll();
-                MultiConnectManager.getInstance(this).closeAll();
                 break;
         }
         return true;
@@ -419,38 +352,6 @@ public class MainActivity extends ToolbarActivity
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
-        int id = item.getItemId();
-
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-            mViewPager.setCurrentItem(0, false);
-        } else if (id == R.id.nav_gallery) {
-            scanManager.stopCycleScan();
-            mViewPager.setCurrentItem(1, false);
-        } else if (id == R.id.nav_slideshow) {
-            scanManager.stopCycleScan();
-            mViewPager.setCurrentItem(2, false);
-        } else if (id == R.id.nav_manage) {
-            scanManager.startScanNow();
-            mViewPager.setCurrentItem(3, false);
-
-            // Intent intent = new Intent(Intent.ACTION_VIEW);
-            // intent.setData(Uri.parse("https://github.com/haodynasty/AndroidBleManager"));
-            // startActivity(intent);
-
-        } else if (id == R.id.nav_share) {
-            mDeviceStore.shareDataAsEmail(this);
-        } else if (id == R.id.nav_send) {
-            Intent data = new Intent(Intent.ACTION_SENDTO);
-            data.setData(Uri.parse("mailto:blakequ@gmail.com"));
-            data.putExtra(Intent.EXTRA_SUBJECT, "AndroidBleManger Feedback");
-            data.putExtra(Intent.EXTRA_TEXT, "Please input you question and advise:\n");
-            startActivity(data);
-        }
-
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
         return true;
     }
 

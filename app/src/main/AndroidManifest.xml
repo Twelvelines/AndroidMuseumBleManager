@@ -32,8 +32,6 @@
         </activity>
         <activity android:name=".ui.FilterActivity" />
 
-        <service android:name=".service.AppUpgradeService" />
-
         <activity
             android:name="com.androidbeaconedmuseum.ScrollingActivity"
             android:label="@string/title_activity_scrolling"

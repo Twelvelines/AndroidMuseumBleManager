@@ -208,6 +208,10 @@
     </string>
     <string name="artwork_demo">A iBeacon of the MAC Address \"40:F3:85:90:63:94\"</string>
     <string name="artwork_labdemo">An iBeacon in Eugene\'s lab.</string>
+    <string name="scan_hint_3">Next scan refresh in 3 seconds</string>
+    <string name="scan_hint_2">Next scan refresh in 2 seconds</string>
+    <string name="scan_hint_1">Next scan refresh in 1 seconds</string>
+    <string name="scan_hint_init">Click Explore to start scanning</string>
 
 
 </resources>

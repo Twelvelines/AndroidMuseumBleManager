@@ -1,7 +1,5 @@
 package com.blakequ.androidblemanager.ui.scan;
 
-import com.androidbeaconedmuseum.ArtworkNotFoundException;
-
 import android.content.Context;
 import android.content.Intent;
 import android.hardware.Sensor;
@@ -19,9 +17,11 @@ import android.widget.TextView;
 
 import com.androidbeaconedmuseum.Artwork;
 import com.androidbeaconedmuseum.ArtworkData;
+import com.androidbeaconedmuseum.ArtworkNotFoundException;
 import com.androidbeaconedmuseum.DirectionView;
 import com.androidbeaconedmuseum.LocationView;
 import com.androidbeaconedmuseum.ScrollingActivity;
+import com.androidbeaconedmuseum.UserLocation;
 import com.blakequ.androidblemanager.R;
 import com.blakequ.androidblemanager.adapter.DeviceListAdapter;
 import com.blakequ.androidblemanager.containers.BluetoothLeDeviceStore;
@@ -30,7 +30,6 @@ import com.blakequ.androidblemanager.ui.MainActivity;
 import com.blakequ.androidblemanager.utils.BluetoothUtils;
 import com.blakequ.bluetooth_manager_lib.device.BluetoothLeDevice;
 import com.blakequ.bluetooth_manager_lib.device.ibeacon.IBeaconDevice;
-import com.androidbeaconedmuseum.UserLocation;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -60,8 +59,6 @@ import butterknife.ButterKnife;
 public class ScanFragment extends Fragment implements SensorEventListener {
     @Bind(R.id.location_board)
     protected LocationView locationView;
-    @Bind(R.id.location_text)
-    protected TextView locationText;
     @Bind(R.id.direction_view)
     protected DirectionView directionView;
     private View rootView;
@@ -158,10 +155,6 @@ public class ScanFragment extends Fragment implements SensorEventListener {
 
     private void updateMapping(List<BluetoothLeDevice> deviceList) {
         locationView.updateViewParams(deviceList);
-        locationText.setText("User location:\n" +
-                "Latitude: " + UserLocation.getLatitude() + "\n" +
-                "Longitude: " + UserLocation.getLongitude() + "\n" +
-                "Angle: " + mOrientationAngles[0]);
         for (IBeaconDevice aBeacon : locationView.getFilteredBeacons()) {
             if (aBeacon.getAccuracy() < 1) {
                 examineArtwork(aBeacon.getAddress());

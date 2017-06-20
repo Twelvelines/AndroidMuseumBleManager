@@ -31,16 +31,11 @@
             </intent-filter>
         </activity>
         <activity android:name=".ui.FilterActivity" />
-        <activity android:name=".ui.scan.DeviceDetailsActivity" />
-        <activity android:name=".ui.scan.DeviceControlActivity" />
-        <activity android:name=".ui.scan.CharacteristicDetailActivity" />
-
-        <service android:name=".service.AppUpgradeService" />
 
         <activity
             android:name="com.androidbeaconedmuseum.ScrollingActivity"
             android:label="@string/title_activity_scrolling"
-            android:theme="@style/AppTheme"></activity>
+            android:theme="@style/AppTheme" />
     </application>
 
 </manifest>

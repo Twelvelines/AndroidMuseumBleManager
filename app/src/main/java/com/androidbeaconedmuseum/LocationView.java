@@ -4,7 +4,6 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.hardware.SensorEventListener;
 import android.util.AttributeSet;
 import android.view.View;
 
@@ -15,7 +14,6 @@ import com.blakequ.bluetooth_manager_lib.device.ibeacon.IBeaconDevice;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by DorisLiu on 6/6/17.

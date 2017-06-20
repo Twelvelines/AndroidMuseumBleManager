@@ -8,9 +8,6 @@ import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
 import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
-import android.view.View;
-import android.widget.ImageView;
-import android.hardware.SensorEventListener;
 
 import com.blakequ.androidblemanager.R;
 

@@ -30,4 +30,15 @@
         android:layout_height="match_parent"
         android:layout_gravity="center" />
 
+    <TextView
+        android:id="@+id/next_scan_hint"
+        android:layout_width="match_parent"
+        android:layout_height="49dp"
+        android:layout_gravity="top|right"
+        android:gravity="center"
+        android:text="@string/scan_hint_init"
+        android:textSize="18sp"
+        app:layout_anchor="@+id/location_board"
+        app:layout_anchorGravity="bottom|left" />
+
 </android.support.design.widget.CoordinatorLayout>

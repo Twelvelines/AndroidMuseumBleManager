@@ -61,6 +61,8 @@ public class ScanFragment extends Fragment implements SensorEventListener {
     protected LocationView locationView;
     @Bind(R.id.direction_view)
     protected DirectionView directionView;
+    @Bind(R.id.next_scan_hint)
+    protected TextView nextScanHint;
     private View rootView;
     private DeviceListAdapter mLeDeviceListAdapter;
     private BluetoothUtils mBluetoothUtils;
@@ -145,7 +147,13 @@ public class ScanFragment extends Fragment implements SensorEventListener {
                         long currentTime = SystemClock.elapsedRealtime();
                         if (currentTime > timestamp + 3000) {
                             timestamp = currentTime;
+                            nextScanHint.setText(R.string.scan_hint_3);
                             updateMapping(store.getDeviceList());
+                        } else if (currentTime > timestamp + 1000 &&
+                                currentTime < timestamp + 2000) {
+                            nextScanHint.setText(R.string.scan_hint_2);
+                        } else if (currentTime > timestamp + 2000) {
+                            nextScanHint.setText(R.string.scan_hint_3);
                         }
                     }
                 }

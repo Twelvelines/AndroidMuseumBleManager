@@ -44,12 +44,12 @@ public class LocationView extends View {
     protected void onDraw(Canvas canvas) {
         canvas.translate(getWidth() / 2, getHeight() / 2);
         for (BeaconLocation aDeviceLocation : locations) {
-            float deviceLatitude = (float) (aDeviceLocation.getLatitude() - UserLocation.getLatitude()) * 150;
-            float deviceLongitude = (float) (aDeviceLocation.getLongitude() - UserLocation.getLongitude()) * 150;
+            float deviceLatitude = (float) (aDeviceLocation.getLatitude() - UserLocation.getLatitude()) * 80;
+            float deviceLongitude = (float) (aDeviceLocation.getLongitude() - UserLocation.getLongitude()) * 80;
             canvas.drawCircle(deviceLatitude, deviceLongitude, 20, cPaint);           // draw the beacons
             double dist = beacons.get(locations.indexOf(aDeviceLocation)).getAccuracy();
             if (dist < 3) {
-                canvas.drawText("I'm here!", deviceLongitude - 20, deviceLatitude, tPaint);
+                canvas.drawText("I'm here!", deviceLongitude/8*7, deviceLatitude, tPaint);
             }
         }
     }

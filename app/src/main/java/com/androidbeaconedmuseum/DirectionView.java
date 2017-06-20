@@ -41,7 +41,7 @@ public class DirectionView extends android.support.v7.widget.AppCompatImageView 
     }
 
     public void updateAngle(float radAngleToNorth) {
-        angleToRotate = (int) (-1 * radAngleToNorth * 180 / Math.PI);
+        angleToRotate = (int) (radAngleToNorth * 180 / Math.PI);
         invalidate();
     }
 }

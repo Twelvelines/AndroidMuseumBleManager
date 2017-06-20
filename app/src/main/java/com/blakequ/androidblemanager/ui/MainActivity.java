@@ -64,8 +64,7 @@ import permissions.dispatcher.PermissionUtils;
 import permissions.dispatcher.RuntimePermissions;
 
 @RuntimePermissions
-public class MainActivity extends ToolbarActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends ToolbarActivity {
 
     @Bind(R.id.common_viewpager)
     protected ScrollViewPager mViewPager;
@@ -78,7 +77,6 @@ public class MainActivity extends ToolbarActivity
     private String filterName;
     private int filterRssi;
     private boolean filterSwitch;
-    private int currentTab = 0;
     private String[] permissionList = {Manifest.permission.BLUETOOTH, Manifest.permission.BLUETOOTH_ADMIN,
             Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION,
             Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE};
@@ -100,19 +98,6 @@ public class MainActivity extends ToolbarActivity
                 .setReconnectStrategy(ConnectConfig.RECONNECT_FIXED_TIME)
                 .setReconnectedLineToExponentTimes(5)
                 .build());
-
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, mToolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.setDrawerListener(toggle);
-        toggle.syncState();
-
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
-
-        //这里是获取NavigationView里面view的方法
-        View headerLayout = navigationView.getHeaderView(0);
-        ((TextView) headerLayout.findViewById(R.id.tv_my_version)).setText(BuildConfig.VERSION_NAME);
 
         fragments = new ArrayList<Fragment>();
 
@@ -291,19 +276,6 @@ public class MainActivity extends ToolbarActivity
         return R.layout.activity_main;
     }
 
-    @SuppressWarnings("StatementWithEmptyBody")
-    @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
-        return true;
-    }
-
-    public void setCurrentIndex(int index) {
-        if (index >= 0 && index < fragments.size()) {
-            mViewPager.setCurrentItem(index, false);
-
-        }
-    }
-
     private ViewPager.OnPageChangeListener listener = new ViewPager.OnPageChangeListener() {
         @Override
         public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -312,7 +284,6 @@ public class MainActivity extends ToolbarActivity
 
         @Override
         public void onPageSelected(int position) {
-            currentTab = position;
             EventBus.getDefault().post(new UpdateEvent(UpdateEvent.Type.TAB_SWITCH, position));
             invalidateOptionsMenu();
         }

@@ -4,19 +4,15 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -29,14 +25,10 @@ import com.blakequ.androidblemanager.R;
 import com.blakequ.androidblemanager.adapter.FragmentPageAdapter;
 import com.blakequ.androidblemanager.containers.BluetoothLeDeviceStore;
 import com.blakequ.androidblemanager.event.UpdateEvent;
-import com.blakequ.androidblemanager.service.AppUpgradeService;
-import com.blakequ.androidblemanager.ui.connect.ConnectManyFragment;
-import com.blakequ.androidblemanager.ui.connect.ConnectOneFragment;
 
 import com.blakequ.androidblemanager.ui.scan.ScanFragment;
 import com.blakequ.androidblemanager.utils.BluetoothUtils;
 import com.blakequ.androidblemanager.utils.Constants;
-import com.blakequ.androidblemanager.utils.FirCheckUtils;
 import com.blakequ.androidblemanager.utils.IntentUtils;
 import com.blakequ.androidblemanager.utils.LocationUtils;
 import com.blakequ.androidblemanager.utils.PreferencesUtils;
@@ -81,7 +73,6 @@ public class MainActivity extends ToolbarActivity
     private List<Fragment> fragments;
     private FragmentPageAdapter mAdapter;
     private BluetoothLeDeviceStore mDeviceStore;
-    private BluetoothLeDeviceStore mLocation;
     private BluetoothUtils mBluetoothUtils;
     private BluetoothScanManager scanManager;
     private String filterName;
@@ -126,9 +117,6 @@ public class MainActivity extends ToolbarActivity
         fragments = new ArrayList<Fragment>();
 
         fragments.add(new ScanFragment());     // 0---------------
-        fragments.add(new ConnectOneFragment());     // 1---------------
-        fragments.add(new ConnectManyFragment());   // 2---------------
-        fragments.add(new ScanFragment());  // 3---------------
         mAdapter = new FragmentPageAdapter(getSupportFragmentManager(), fragments);
 //        mViewPager.setOffscreenPageLimit(fragments.size());
         mViewPager.setAdapter(mAdapter);
@@ -265,37 +253,17 @@ public class MainActivity extends ToolbarActivity
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
-        if (currentTab == 0) {
-            if (!scanManager.isScanning()) {
-                menu.findItem(R.id.menu_stop).setVisible(false);
-                menu.findItem(R.id.menu_scan).setVisible(true);
-                menu.findItem(R.id.menu_filter).setVisible(true);
-                menu.findItem(R.id.menu_refresh).setActionView(null);
-            } else {
-                menu.findItem(R.id.menu_stop).setVisible(true);
-                menu.findItem(R.id.menu_scan).setVisible(false);
-                menu.findItem(R.id.menu_filter).setVisible(false);
-                menu.findItem(R.id.menu_refresh).setActionView(R.layout.actionbar_progress_indeterminate);
-            }
-        } else if (currentTab == 1) {
+
+        if (!scanManager.isScanning()) {
             menu.findItem(R.id.menu_stop).setVisible(false);
-            menu.findItem(R.id.menu_scan).setVisible(false);
-            menu.findItem(R.id.menu_filter).setVisible(false);
+            menu.findItem(R.id.menu_scan).setVisible(true);
+            menu.findItem(R.id.menu_filter).setVisible(true);
             menu.findItem(R.id.menu_refresh).setActionView(null);
-            int size = BluetoothConnectManager.getInstance(this).getConnectedDevice().size();
-            if (size > 0) {
-                if (BluetoothConnectManager.getInstance(this).getCurrentState() == ConnectState.CONNECTING) {
-                    menu.findItem(R.id.menu_refresh).setActionView(R.layout.actionbar_progress_indeterminate);
-                }
-            }
         } else {
-            menu.findItem(R.id.menu_stop).setVisible(false);
+            menu.findItem(R.id.menu_stop).setVisible(true);
             menu.findItem(R.id.menu_scan).setVisible(false);
             menu.findItem(R.id.menu_filter).setVisible(false);
-            menu.findItem(R.id.menu_refresh).setActionView(null);
-            if (MultiConnectManager.getInstance(this).isConnectingDevice()) {
-                menu.findItem(R.id.menu_refresh).setActionView(R.layout.actionbar_progress_indeterminate);
-            }
+            menu.findItem(R.id.menu_refresh).setActionView(R.layout.actionbar_progress_indeterminate);
         }
         return true;
     }

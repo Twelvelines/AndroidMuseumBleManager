@@ -5,18 +5,19 @@ import java.security.NoSuchAlgorithmException;
 
 /**
  * MD5 encryptor class
- * @author blakequ Blakequ@gmail.com
  *
+ * @author blakequ Blakequ@gmail.com
  */
 public class MD5Encryptor {
-	// 全局数组
-    private final static String[] strDigits = { "0", "1", "2", "3", "4", "5",
-            "6", "7", "8", "9", "a", "b", "c", "d", "e", "f" };
+    // 全局数组
+    private final static String[] strDigits = {"0", "1", "2", "3", "4", "5",
+            "6", "7", "8", "9", "a", "b", "c", "d", "e", "f"};
 
     /**
      * 返回形式为数字跟字符串
      * <p>Title: byteToArrayString
-     * <p>Description: 
+     * <p>Description:
+     *
      * @param bByte
      * @return
      */
@@ -34,7 +35,8 @@ public class MD5Encryptor {
     /**
      * 返回形式只为数字
      * <p>Title: byteToNum
-     * <p>Description: 
+     * <p>Description:
+     *
      * @param bByte
      * @return
      */
@@ -50,7 +52,8 @@ public class MD5Encryptor {
     /**
      * 转换字节数组为16进制字串
      * <p>Title: byteToString
-     * <p>Description: 
+     * <p>Description:
+     *
      * @param bByte
      * @return
      */
@@ -65,7 +68,8 @@ public class MD5Encryptor {
     /**
      * 获取加密后的MD5字符串
      * <p>Title: GetMD5Code
-     * <p>Description: 
+     * <p>Description:
+     *
      * @param strObj
      * @return
      */

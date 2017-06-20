@@ -1,15 +1,5 @@
 apply plugin: 'com.android.application'
 apply plugin: 'android-apt'
-//集成fir.im发布
-apply plugin: 'im.fir.plugin.gradle'
-/*
-fir{
-    //必填 上传 fir.im apk 字段，否则无法上传 APP 到 fir.im
-    apiToken hasLocalProperty("FIR_TOKEN") ? getLocalProperty("FIR_TOKEN") : System.getenv("FIR_TOKEN")
-    //可选 上传fir.im 中显示的changelog
-    changeLog gitLogFirstCommit()//getLocalProperty("UPDATE_LOG")
-}*/
-
 
 android {
     compileSdkVersion 25
@@ -17,14 +7,10 @@ android {
 
     defaultConfig {
         applicationId "com.blakequ.androidblemanager"
-        minSdkVersion 18
+        minSdkVersion 19
         targetSdkVersion 25
         versionCode 1
         versionName "1.0"
-        // buildConfigField "String", "FIR_TOKEN", hasLocalProperty("FIR_TOKEN_STRING") ? getLocalProperty("FIR_TOKEN_STRING") : System.getenv("FIR_TOKEN")
-        // buildConfigField "String", "FIR_ID", hasLocalProperty("FIR_ID_STRING") ? getLocalProperty("FIR_ID_STRING") : System.getenv("FIR_ID")
-        //设置输出app默认前缀名称
-        //project.ext.set("archivesBaseName", "BleManager_v" + versionName + "_"+today);
     }
 
     //签名配置

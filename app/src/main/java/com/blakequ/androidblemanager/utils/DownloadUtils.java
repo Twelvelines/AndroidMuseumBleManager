@@ -14,8 +14,8 @@ import java.util.zip.GZIPInputStream;
 
 /**
  * 下载工具类
- * @author blakequ Blakequ@gmail.com
  *
+ * @author blakequ Blakequ@gmail.com
  */
 public class DownloadUtils {
     private static final int CONNECT_TIMEOUT = 10000;
@@ -23,14 +23,15 @@ public class DownloadUtils {
     private final static int DATA_BUFFER = 8192;
 
     public interface DownloadListener {
-    	/**
-    	 * 实时更新下载进度
-    	 * <p>Title: downloading
-    	 * <p>Description: 
-    	 * @param progress
-    	 */
+        /**
+         * 实时更新下载进度
+         * <p>Title: downloading
+         * <p>Description:
+         *
+         * @param progress
+         */
         public void downloading(int progress);
-        
+
         /**
          * 下载完成
          * <p>Title: downloaded
@@ -45,24 +46,24 @@ public class DownloadUtils {
         int currentSize = 0;
         long totalSize = -1;
 
-        if(!append && dest.exists() && dest.isFile()) {
+        if (!append && dest.exists() && dest.isFile()) {
             dest.delete();
         }
 
-        if(append && dest.exists() && dest.exists()) {
+        if (append && dest.exists() && dest.exists()) {
             FileInputStream fis = null;
             try {
                 fis = new FileInputStream(dest);
                 currentSize = fis.available();
-            } catch(IOException e) {
+            } catch (IOException e) {
                 throw e;
             } finally {
-                if(fis != null) {
+                if (fis != null) {
                     fis.close();
                 }
             }
         }
-        Log.i("DownloadUtils", "Start download file "+currentSize+" url:"+urlStr);
+        Log.i("DownloadUtils", "Start download file " + currentSize + " url:" + urlStr);
 
         HttpURLConnection conn = null;
         try {
@@ -70,7 +71,7 @@ public class DownloadUtils {
             URL mURL = new URL(urlStr);
             conn = (HttpURLConnection) mURL.openConnection();
 
-            if(currentSize > 0) {
+            if (currentSize > 0) {
                 conn.setRequestProperty("RANGE", "bytes=" + currentSize + "-");
             }
             conn.setRequestMethod("GET");
@@ -86,33 +87,33 @@ public class DownloadUtils {
                     is = conn.getInputStream();
                     remoteSize = conn.getContentLength();
                     String value = conn.getContentEncoding();
-                    if(value != null && value.equalsIgnoreCase("gzip")) {
+                    if (value != null && value.equalsIgnoreCase("gzip")) {
                         is = new GZIPInputStream(is);
                     }
 
                     os = new FileOutputStream(dest, append);
                     byte buffer[] = new byte[DATA_BUFFER];
                     int readSize = 0;
-                    while((readSize = is.read(buffer)) > 0){
+                    while ((readSize = is.read(buffer)) > 0) {
                         os.write(buffer, 0, readSize);
                         os.flush();
                         totalSize += readSize;
-                        if(downloadListener!= null){
-                            downloadProgress = (int) (totalSize*100/remoteSize);
+                        if (downloadListener != null) {
+                            downloadProgress = (int) (totalSize * 100 / remoteSize);
                             downloadListener.downloading(downloadProgress);
                         }
                     }
-                    if(totalSize < 0) {
+                    if (totalSize < 0) {
                         totalSize = 0;
                     }
                 } else {
-                    throw new NetworkErrorException("response status is "+responseCode);
+                    throw new NetworkErrorException("response status is " + responseCode);
                 }
             } finally {
-                if(os != null) {
+                if (os != null) {
                     os.close();
                 }
-                if(is != null) {
+                if (is != null) {
                     is.close();
                 }
             }
@@ -125,11 +126,11 @@ public class DownloadUtils {
             }
         }
 
-        if(totalSize < 0) {
+        if (totalSize < 0) {
             throw new Exception("Download file fail: " + urlStr);
         }
 
-        if(downloadListener!= null){
+        if (downloadListener != null) {
             downloadListener.downloaded();
         }
 

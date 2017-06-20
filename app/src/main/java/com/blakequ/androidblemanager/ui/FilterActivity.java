@@ -90,20 +90,20 @@ public class FilterActivity extends ToolbarActivity {
         });
     }
 
-    private void setCheck(boolean isChecked){
-        if (!isChecked){
+    private void setCheck(boolean isChecked) {
+        if (!isChecked) {
             mIvFlag.setVisibility(View.VISIBLE);
-        }else{
+        } else {
             mIvFlag.setVisibility(View.GONE);
             mEtName.clearFocus();
         }
     }
 
     @Override
-    protected void onPause(){
+    protected void onPause() {
         super.onPause();
         PreferencesUtils.putBoolean(this, Constants.FILTER_SWITCH, mSwitch.isChecked());
-        if (mSwitch.isChecked()){
+        if (mSwitch.isChecked()) {
             PreferencesUtils.putString(this, Constants.FILTER_NAME, mEtName.getText().toString().trim());
             PreferencesUtils.putInt(this, Constants.FILTER_RSSI, rssi);
         }

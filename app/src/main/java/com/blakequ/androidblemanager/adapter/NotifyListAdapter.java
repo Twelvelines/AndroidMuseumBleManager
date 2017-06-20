@@ -24,7 +24,7 @@ import com.blakequ.androidblemanager.R;
  * version : 1.0 <br>
  * description:
  */
-public class NotifyListAdapter extends BaseArrayListAdapter<String>{
+public class NotifyListAdapter extends BaseArrayListAdapter<String> {
 
     public NotifyListAdapter(Context context) {
         super(context);
@@ -33,7 +33,7 @@ public class NotifyListAdapter extends BaseArrayListAdapter<String>{
     @Override
     public void addHead(String datas) {
         int size = getCount();
-        if (getCount() >= 10){
+        if (getCount() >= 10) {
             delete(size - 1);
         }
         super.addHead(datas);
@@ -52,7 +52,7 @@ public class NotifyListAdapter extends BaseArrayListAdapter<String>{
             viewHolder = (ViewHolder) view.getTag();
         }
 
-        viewHolder.descValue.setText((String)getItem(position));
+        viewHolder.descValue.setText((String) getItem(position));
         return view;
     }
 

@@ -8,12 +8,12 @@ import android.view.MotionEvent;
 /**
  * Found at http://stackoverflow.com/questions/7814017/is-it-possible-to-disable-scrolling-on-a-viewpager.
  * Convenient way to temporarily disable ViewPager navigation while interacting with ImageView.
- * 
+ * <p>
  * Julia Zudikova
  */
 
 /**
- * 
+ *
  *  * <br>在使用的时候注意几个问题：
  * <br>1.让ViewPager不自动销毁，一直保持在内存setOffscreenPageLimit(保持的个数)
  * <br>2.禁止ViewPager滑动，使用库ScrollViewPager调用setLocked方法(此时使用setCurrentItem切换)
@@ -32,8 +32,8 @@ import android.view.MotionEvent;
  */
 public class ScrollViewPager extends ViewPager {
 
-	private boolean isLocked;
-	
+    private boolean isLocked;
+
     public ScrollViewPager(Context context) {
         super(context);
         isLocked = false;
@@ -46,15 +46,15 @@ public class ScrollViewPager extends ViewPager {
 
     @Override
     public boolean onInterceptTouchEvent(MotionEvent ev) {
-    	if (!isLocked) {
-	        try {
-	            return super.onInterceptTouchEvent(ev);
-	        } catch (IllegalArgumentException e) {
-	            e.printStackTrace();
-	            return false;
-	        }
-    	}
-    	return false;
+        if (!isLocked) {
+            try {
+                return super.onInterceptTouchEvent(ev);
+            } catch (IllegalArgumentException e) {
+                e.printStackTrace();
+                return false;
+            }
+        }
+        return false;
     }
 
     @Override
@@ -64,28 +64,28 @@ public class ScrollViewPager extends ViewPager {
         }
         return false;
     }
-    
+
     /**
      * reset the scroll status
      * <p>Title: toggleLock
      * <p>Description:
      */
-	public void toggleLock() {
-		isLocked = !isLocked;
-	}
+    public void toggleLock() {
+        isLocked = !isLocked;
+    }
 
-	/**
-	 * add lock to refuse or allow scroll view pager
-	 * <p>Title: setLocked
-	 * <p>Description: 
-	 * @param isLocked
-	 */
-	public void setLocked(boolean isLocked) {
-		this.isLocked = isLocked;
-	}
+    /**
+     * add lock to refuse or allow scroll view pager
+     * <p>Title: setLocked
+     * <p>Description:
+     * @param isLocked
+     */
+    public void setLocked(boolean isLocked) {
+        this.isLocked = isLocked;
+    }
 
-	public boolean isLocked() {
-		return isLocked;
-	}
-	
+    public boolean isLocked() {
+        return isLocked;
+    }
+
 }

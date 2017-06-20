@@ -3,7 +3,7 @@
 # AndroidBleManager
 
 # 使用
-将下面的代码增加到build.gradle文件中,${latest.version} is [![Download][bintray_svg]][bintray_url]
+将下面的代码增加到build.gradle文件中
 ```
 dependencies {
     compile 'com.blakequ.androidblemanager:bluetooth-manager-lib:${latest.version}'

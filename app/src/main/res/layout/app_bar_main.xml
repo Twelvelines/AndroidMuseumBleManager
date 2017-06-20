@@ -21,6 +21,11 @@
             app:popupTheme="@style/AppTheme.PopupOverlay" />
     </android.support.design.widget.AppBarLayout>
 
-    <include layout="@layout/content_main" />
+    <fragment
+        android:name="com.blakequ.androidblemanager.ui.scan.ScanFragment"
+        android:id="@+id/scan_fragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:layout="@layout/app_location" />
 
 </android.support.design.widget.CoordinatorLayout>

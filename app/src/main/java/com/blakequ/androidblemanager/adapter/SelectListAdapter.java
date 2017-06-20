@@ -6,12 +6,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-
-import com.blakequ.androidblemanager.utils.BluetoothRssiLevel;
-import com.blakequ.androidblemanager.R;
 import com.blakequ.androidblemanager.R;
 import com.blakequ.androidblemanager.utils.BluetoothRssiLevel;
-
 import com.blakequ.bluetooth_manager_lib.device.BluetoothLeDevice;
 
 import java.util.ArrayList;

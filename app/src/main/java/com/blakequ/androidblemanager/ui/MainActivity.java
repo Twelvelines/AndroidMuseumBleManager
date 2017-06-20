@@ -7,17 +7,12 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
-import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.blakequ.androidblemanager.BuildConfig;
@@ -25,7 +20,6 @@ import com.blakequ.androidblemanager.R;
 import com.blakequ.androidblemanager.adapter.FragmentPageAdapter;
 import com.blakequ.androidblemanager.containers.BluetoothLeDeviceStore;
 import com.blakequ.androidblemanager.event.UpdateEvent;
-
 import com.blakequ.androidblemanager.ui.scan.ScanFragment;
 import com.blakequ.androidblemanager.utils.BluetoothUtils;
 import com.blakequ.androidblemanager.utils.Constants;
@@ -36,10 +30,7 @@ import com.blakequ.androidblemanager.widget.MyAlertDialog;
 import com.blakequ.androidblemanager.widget.ScrollViewPager;
 import com.blakequ.bluetooth_manager_lib.BleManager;
 import com.blakequ.bluetooth_manager_lib.BleParamsOptions;
-import com.blakequ.bluetooth_manager_lib.connect.BluetoothConnectManager;
 import com.blakequ.bluetooth_manager_lib.connect.ConnectConfig;
-import com.blakequ.bluetooth_manager_lib.connect.ConnectState;
-import com.blakequ.bluetooth_manager_lib.connect.multiple.MultiConnectManager;
 import com.blakequ.bluetooth_manager_lib.scan.BluetoothScanManager;
 import com.blakequ.bluetooth_manager_lib.scan.ScanOverListener;
 import com.blakequ.bluetooth_manager_lib.scan.bluetoothcompat.ScanCallbackCompat;
@@ -66,11 +57,6 @@ import permissions.dispatcher.RuntimePermissions;
 @RuntimePermissions
 public class MainActivity extends ToolbarActivity {
 
-    @Bind(R.id.common_viewpager)
-    protected ScrollViewPager mViewPager;
-
-    private List<Fragment> fragments;
-    private FragmentPageAdapter mAdapter;
     private BluetoothLeDeviceStore mDeviceStore;
     private BluetoothUtils mBluetoothUtils;
     private BluetoothScanManager scanManager;
@@ -98,15 +84,6 @@ public class MainActivity extends ToolbarActivity {
                 .setReconnectStrategy(ConnectConfig.RECONNECT_FIXED_TIME)
                 .setReconnectedLineToExponentTimes(5)
                 .build());
-
-        fragments = new ArrayList<Fragment>();
-
-        fragments.add(new ScanFragment());     // 0---------------
-        mAdapter = new FragmentPageAdapter(getSupportFragmentManager(), fragments);
-//        mViewPager.setOffscreenPageLimit(fragments.size());
-        mViewPager.setAdapter(mAdapter);
-        mViewPager.setLocked(true);
-        mViewPager.addOnPageChangeListener(listener);
 
         initScan();
     }
@@ -215,16 +192,6 @@ public class MainActivity extends ToolbarActivity {
             } else {
                 startScan();
             }
-        }
-    }
-
-    @Override
-    public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
         }
     }
 

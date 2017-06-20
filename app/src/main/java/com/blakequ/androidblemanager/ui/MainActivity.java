@@ -148,8 +148,6 @@ public class MainActivity extends ToolbarActivity
         mViewPager.addOnPageChangeListener(listener);
 
         initScan();
-
-        //updateFirAppUpdate();
     }
 
     @Override
@@ -169,9 +167,7 @@ public class MainActivity extends ToolbarActivity
     @Override
     protected void onPause() {
         super.onPause();
-        if (scanManager.isScanning()) {
-            scanManager.stopCycleScan();
-        }
+        stopScan();
     }
 
     public BluetoothLeDeviceStore getDeviceStore() {
@@ -279,6 +275,12 @@ public class MainActivity extends ToolbarActivity
                 scanManager.startScanNow();
                 invalidateOptionsMenu();
             }
+        }
+    }
+
+    public void stopScan() {
+        if (scanManager.isScanning()) {
+            scanManager.stopCycleScan();
         }
     }
 

@@ -17,22 +17,21 @@
     </android.support.design.widget.AppBarLayout>
     -->
 
-    <ImageView
-        android:id="@+id/imageView2"
-        android:layout_width="34dp"
-        android:layout_height="52dp"
-        android:layout_gravity="center"
-        app:srcCompat="@mipmap/location" />
+    <com.androidbeaconedmuseum.DirectionView
+        android:id="@+id/direction_view"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_gravity="center" />
 
 
     <com.androidbeaconedmuseum.LocationView
         android:id="@+id/location_board"
         android:layout_width="match_parent"
-        android:layout_gravity="center"
-        android:layout_height="500dp" />
+        android:layout_height="match_parent"
+        android:layout_gravity="center" />
 
     <TextView
-        android:id="@+id/locationText"
+        android:id="@+id/location_text"
         android:layout_width="match_parent"
         android:layout_height="82dp"
         android:layout_gravity="bottom|right"

@@ -207,6 +207,7 @@
         "when a user tries to pick up one of cards.\n\n"
     </string>
     <string name="artwork_demo">A iBeacon of the MAC Address \"40:F3:85:90:63:94\"</string>
+    <string name="artwork_labdemo">An iBeacon in Eugene\'s lab.</string>
 
 
 </resources>

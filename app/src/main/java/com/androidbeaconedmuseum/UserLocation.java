@@ -24,12 +24,12 @@ public class UserLocation {
         double d_2 = selected.get(1).getAccuracy();
         double d_3 = selected.get(2).getAccuracy();
         try {
-            double x_1 = BeaconDeviceLocationData.getLocation(selected.get(0)).getLatitude();
-            double y_1 = BeaconDeviceLocationData.getLocation(selected.get(0)).getLongitude();
-            double x_2 = BeaconDeviceLocationData.getLocation(selected.get(1)).getLatitude();
-            double y_2 = BeaconDeviceLocationData.getLocation(selected.get(1)).getLongitude();
-            double x_3 = BeaconDeviceLocationData.getLocation(selected.get(2)).getLatitude();
-            double y_3 = BeaconDeviceLocationData.getLocation(selected.get(2)).getLongitude();
+            double x_1 = BeaconLocationData.getLocation(selected.get(0)).getLatitude();
+            double y_1 = BeaconLocationData.getLocation(selected.get(0)).getLongitude();
+            double x_2 = BeaconLocationData.getLocation(selected.get(1)).getLatitude();
+            double y_2 = BeaconLocationData.getLocation(selected.get(1)).getLongitude();
+            double x_3 = BeaconLocationData.getLocation(selected.get(2)).getLatitude();
+            double y_3 = BeaconLocationData.getLocation(selected.get(2)).getLongitude();
             // algorithm part
             double k_1 = 2 * (x_2 - x_1);
             double k_2 = 2 * (y_2 - y_1);
@@ -62,7 +62,7 @@ public class UserLocation {
             if (selected.size() > 2) {
                 break;
             }
-            if (BeaconDeviceLocationData.isRecognisedBeacon(aBeacon)) {
+            if (BeaconLocationData.isRecognisedBeacon(aBeacon)) {
                 selected.add(aBeacon);
             }
         }

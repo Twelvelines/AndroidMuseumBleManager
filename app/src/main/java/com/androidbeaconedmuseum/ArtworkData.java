@@ -15,6 +15,7 @@ public class ArtworkData {
     static {
         // putting arkwork info here
         artworks.add(new Artwork("Demo", "40:F3:85:90:63:94", R.string.artwork_demo));
+        artworks.add(new Artwork("Lab Demo", "40:F3:85:90:63:A1", R.string.artwork_labdemo, R.drawable.artwork_labdemo));
     }
 
     public static Artwork getArtwork(String addr) throws ArtworkNotFoundException {

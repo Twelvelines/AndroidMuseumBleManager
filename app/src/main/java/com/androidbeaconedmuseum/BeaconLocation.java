@@ -1,23 +1,21 @@
 package com.androidbeaconedmuseum;
 
-import com.blakequ.bluetooth_manager_lib.device.ibeacon.IBeaconDevice;
-
 /**
  * Created by toy on 05/06/2017.
  */
 
-public class BeaconDeviceLocation {
+public class BeaconLocation {
     private double latitude, longitude;
     private int major, minor;
     private String uuid, macAddr;
 
-    public BeaconDeviceLocation(String macAddr, double latitude, double longitude) {
+    public BeaconLocation(String macAddr, double latitude, double longitude) {
         this.macAddr = macAddr;
         this.latitude = latitude;
         this.longitude = longitude;
     }
 
-    public BeaconDeviceLocation(String uuid, int major, int minor, String macAddr, double latitude, double longitude) {
+    public BeaconLocation(String uuid, int major, int minor, String macAddr, double latitude, double longitude) {
         this(macAddr, longitude, latitude);
         this.uuid = uuid;
         this.major = major;

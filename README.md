@@ -1,4 +1,3 @@
-# [English version](README-en.md)
 
 # Android Museum BLE Manager
 ### Library used: AndroidBleManager
